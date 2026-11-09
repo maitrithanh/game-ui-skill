@@ -76,6 +76,24 @@ For web projects, copy the files in `skill/game-ui/assets/` into your project. F
 
 The skill does not choose the game name, rules, screens, features, or technology for the user.
 
+## Activating the skill
+
+Installing a skill makes it available to the agent; it does not force the skill into every conversation. The agent loads it when the request matches the `description` in `SKILL.md`.
+
+To activate it explicitly, use the skill command if your agent exposes slash commands:
+
+```text
+/game-ui
+```
+
+You can also mention it in the request:
+
+```text
+Use the game-ui skill to design the settings screen for my game.
+```
+
+For project-specific use, install it under `.github/skills/game-ui/` for GitHub Copilot, `.claude/skills/game-ui/` for Claude Code, or the agent's documented skills directory. The folder name and the frontmatter `name` must both be `game-ui`.
+
 ## Web initialization example
 
 After copying `assets/kit.css` and `assets/kit.js`, initialize the kit with the choices confirmed by the user:
@@ -169,6 +187,22 @@ This package is distributed under the MIT License. See the `LICENSE` file for th
 `game-ui` là skill giao diện game mã nguồn mở cho web, mobile, desktop và game engine. Skill cung cấp phong cách **viền mực**, **nút khối dày**, màu tươi, chuyển động có phản hồi và các tiêu chuẩn về accessibility, hiệu năng, code và hình ảnh.
 
 Skill không tự quyết định game, luật chơi, công nghệ, kích thước, màu sắc hay âm thanh. Trước khi dựng UI, hãy cung cấp các lựa chọn đó để skill thích ứng đúng với project.
+
+### Kích hoạt skill
+
+Cài skill chỉ làm skill sẵn sàng cho agent; không bắt skill chạy trong mọi cuộc hội thoại. Agent sẽ tự nạp skill khi yêu cầu khớp với `description` trong `SKILL.md`.
+
+Có thể gọi trực tiếp bằng slash command nếu agent hỗ trợ:
+
+```text
+/game-ui
+```
+
+Hoặc ghi rõ trong yêu cầu:
+
+```text
+Hãy dùng skill game-ui để thiết kế màn hình cài đặt cho game của tôi.
+```
 
 ### Cài đặt nhanh
 

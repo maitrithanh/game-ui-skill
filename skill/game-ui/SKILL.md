@@ -1,6 +1,6 @@
 ---
 name: game-ui
-description: Build game UI in an ink-outline, thick-block-button style with bright colors for any platform and technology the user chooses (web, React/Vue/Svelte/Angular, mobile, desktop, engine). Ask the user before building. Includes a kit, code standards, palettes, and visual checks.
+description: "Use when designing or implementing a game UI, game HUD, game menu, game screen, or interactive game component for web, React/Vue/Svelte/Angular, mobile, desktop, or an engine. Build in an ink-outline, thick-block-button style with bright colors. Ask the user before building. Includes a kit, code standards, palettes, and visual checks."
 ---
 
 # Game UI: ink outlines, thick blocks

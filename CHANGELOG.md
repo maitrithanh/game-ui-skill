@@ -5,6 +5,13 @@ All notable changes to this project are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and versions follow [Semantic Versioning](https://semver.org/).
 
+## [1.1.1] - 2026-11-09
+
+### Changed
+
+- Improved the skill description with explicit game UI discovery triggers.
+- Documented automatic and explicit skill activation for supported agents.
+
 ## [1.1.0] - 2026-11-09
 
 ### Added
