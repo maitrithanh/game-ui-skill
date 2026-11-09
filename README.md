@@ -15,6 +15,41 @@ This skill defines the interface and quality workflow, but does not decide the g
 
 ## Installation
 
+### One-command install
+
+From the root of a project, run:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh | sh
+```
+
+This downloads the latest release and installs it into `.github/skills/game-ui/`.
+
+Install for a specific agent instead:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh \
+  | sh -s -- --agent copilot
+```
+
+Supported targets are `copilot` (`~/.copilot/skills`), `claude` (`~/.claude/skills`), `codex` (`~/.codex/skills`), `gemini` (`~/.gemini/skills`), and `agents` (`~/.agents/skills`). Use `--dir PATH` for a custom agent directory.
+
+Examples:
+
+```bash
+# GitHub Copilot
+curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh | sh -s -- --agent copilot
+
+# Claude Code
+curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh | sh -s -- --agent claude
+
+# OpenAI Codex
+curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh | sh -s -- --agent codex
+
+# Gemini CLI
+curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh | sh -s -- --agent gemini
+```
+
 ### Use in a workspace that supports skill packages
 
 Download `releases/game-ui.skill` from this repository, then place the downloaded `game-ui.skill` in the workspace's skills directory, or install it through the skill-package mechanism of your tool. The archive contains `game-ui/`, with `SKILL.md` as its entry point.
@@ -89,6 +124,7 @@ After copying `assets/kit.css` and `assets/kit.js`, initialize the kit with the 
 | `releases/game-ui.skill` | Installable ZIP package |
 | `README.md` | English and Vietnamese documentation |
 | `CHANGELOG.md` | Versioned release notes |
+| `install.sh` | One-command installer for the latest release |
 | `LICENSE` | Repository license |
 
 ## Validation tools
@@ -135,6 +171,39 @@ This package is distributed under the MIT License. See the `LICENSE` file for th
 Skill không tự quyết định game, luật chơi, công nghệ, kích thước, màu sắc hay âm thanh. Trước khi dựng UI, hãy cung cấp các lựa chọn đó để skill thích ứng đúng với project.
 
 ### Cài đặt nhanh
+
+Cài nhanh từ thư mục gốc của project:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh | sh
+```
+
+Script sẽ tải release mới nhất và cài vào `.github/skills/game-ui/`.
+
+Cài cho agent cụ thể:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh \
+  | sh -s -- --agent copilot
+```
+
+Hỗ trợ `copilot` (`~/.copilot/skills`), `claude` (`~/.claude/skills`), `codex` (`~/.codex/skills`), `gemini` (`~/.gemini/skills`) và `agents` (`~/.agents/skills`). Dùng `--dir PATH` nếu agent sử dụng thư mục riêng.
+
+Ví dụ:
+
+```bash
+# GitHub Copilot
+curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh | sh -s -- --agent copilot
+
+# Claude Code
+curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh | sh -s -- --agent claude
+
+# OpenAI Codex
+curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh | sh -s -- --agent codex
+
+# Gemini CLI
+curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh | sh -s -- --agent gemini
+```
 
 Tải `releases/game-ui.skill` từ repository, sau đó giải nén vào `.github/skills`:
 
@@ -185,6 +254,7 @@ Mobile dọc dùng `mobile`, mobile ngang dùng `landscape`, desktop dùng `desk
 - `demo/`: landing page và browser demo.
 - `releases/game-ui.skill`: package để cài đặt.
 - `CHANGELOG.md`: lịch sử thay đổi theo version.
+- `install.sh`: script cài đặt release mới nhất bằng một lệnh.
 - `README.md`: tài liệu tiếng Anh và tiếng Việt.
 - `LICENSE`: giấy phép của repository.
 
