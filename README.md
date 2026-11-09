@@ -31,6 +31,14 @@ Install globally for the current user:
 npx skills add maitrithanh/game-ui-skill -g -y
 ```
 
+Update all installed skills after a new release:
+
+```bash
+npx skills update
+```
+
+Start a new agent session after updating so it does not keep an older skill copy in its current context.
+
 ### One-command install
 
 From the root of a project, run:
@@ -245,6 +253,14 @@ Cài global cho user hiện tại:
 ```bash
 npx skills add maitrithanh/game-ui-skill -g -y
 ```
+
+Cập nhật các skill đã cài sau khi có release mới:
+
+```bash
+npx skills update
+```
+
+Sau khi cập nhật, mở session agent mới để agent không tiếp tục dùng bản skill cũ trong context hiện tại.
 
 Cài nhanh từ thư mục gốc của project:
 
