@@ -7,14 +7,17 @@ RELEASE_DIR := releases
 RELEASE_FILE := $(RELEASE_DIR)/$(SKILL_NAME).skill
 VERSIONED_RELEASE_FILE := $(RELEASE_DIR)/$(SKILL_NAME)-v$(VERSION).skill
 CHANGELOG_FILE := CHANGELOG.md
+AGENT_DIR ?= .agents/skills
 
-.PHONY: help build-release validate-release release clean
+.PHONY: help build-release validate-release release install-agent clean
 
 help:
 	@printf '%s\n' \
 		'make build-release      Build the versioned and latest release archives' \
 		'make validate-release   Validate the release archive' \
 		'make release            Build and validate the release archive' \
+		'make install-agent     Install source into .agents/skills/game-ui' \
+		'make install-agent AGENT_DIR=.claude/skills' \
 		'make clean              Remove the generated release archive'
 
 build-release:
@@ -41,6 +44,11 @@ validate-release:
 	@printf 'Validated %s\n' '$(RELEASE_FILE)'
 
 release: build-release validate-release
+
+install-agent:
+	@mkdir -p $(AGENT_DIR)/$(SKILL_NAME)
+	@cp -R $(SOURCE_DIR)/. $(AGENT_DIR)/$(SKILL_NAME)/
+	@printf 'Installed %s into %s/%s\n' '$(SKILL_NAME)' '$(AGENT_DIR)' '$(SKILL_NAME)'
 
 clean:
 	@rm -f $(RELEASE_FILE) $(VERSIONED_RELEASE_FILE)

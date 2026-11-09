@@ -12,7 +12,8 @@ Applies to **every visual** created by the skill: characters, accessories, icons
 - **Complete faces:** eyes, cheeks, mouth, and highlights. Expressions show state; accessories show role. Never leave a face blank.
 - **Leave frame padding:** keep at least 3% on every `viewBox` edge so strokes and shadows do not touch the boundary. Center the image horizontally.
 - **Readable at small sizes:** remove or enlarge details below about 1.5 units (viewBox 80). The image must be recognizable at 24px.
-- **Keep the set consistent.** A new hat, icon, or character must look like it was drawn by the same hand as existing assets: same outline weight, saturation, and proportions.
+- **Keep the set coherent, not identical.** A new hat, icon, or character must belong to the same art direction as the chosen theme. Share a deliberate line family, lighting logic, and token system, but allow silhouette, material, proportions, and texture to change when the character’s role or world calls for it.
+- **Theme before template.** Do not reuse the default round avatar, grass platform, or candy palette when they conflict with the brief. Translate the theme into a visual concept first, then build the asset set around that concept.
 - **Render every variant.** Every hat must work with every expression; every icon must have both ink and white versions. No combination may break.
 
 ## What complete means

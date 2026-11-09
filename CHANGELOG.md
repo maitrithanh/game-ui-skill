@@ -5,6 +5,29 @@ All notable changes to this project are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and versions follow [Semantic Versioning](https://semver.org/).
 
+## [1.1.4] - 2026-11-09
+
+### Added
+
+- Package-local `AGENTS.md` bridge that directs agents to read `SKILL.md` before changing game UI.
+- Root agent instructions that explicitly connect repository work to the packaged skill instructions.
+
+## [1.1.3] - 2026-11-09
+
+### Changed
+
+- Reframed the visual rules as a core quality identity with theme-driven art direction.
+- Allowed backgrounds, materials, typography, palettes, scenes, and character silhouettes to adapt to the game brief.
+- Added a two-direction creative proposal and recommendation workflow before applying themed UI.
+- Clarified that default palettes, stages, avatars, and fonts are fallbacks rather than mandatory templates.
+
+## [1.1.2] - 2026-11-09
+
+### Added
+
+- Mandatory layout contract for stable shells, scroll ownership, responsive tracks, text wrapping, safe positioning, and overflow validation.
+- Required viewport matrix and overlap/clipping checks for pre-delivery UI review.
+
 ## [1.1.1] - 2026-11-09
 
 ### Changed

@@ -85,24 +85,35 @@ Size mapping: portrait mobile → `"mobile"`, landscape mobile → `"landscape"`
 
 ---
 
-## 1. Fixed identity (consistent across games)
+## 1. Core quality identity (consistent across games)
 
-- **Ink outline:** every object has a 2px `ink` outline (`#2f3650`). No pure black or pale gray outlines. Primary text and icons also use ink.
-- **Thick blocks, no blur:** an interactive object has a 4px `-d` bottom lip, a hard ink shadow offset by 3, and a white highlight at the top. Blur shadows are only for High Graphics mode.
+- **Ink-led line quality:** use the kit’s ink outline language (`#2f3650`) for UI controls and important objects. The outline may vary in weight, shape, and treatment for a deliberate theme, but never becomes accidental, muddy, or low-contrast.
+- **Tactile interaction:** interactive objects need a clear pressed state, depth cue, and focus state. Use the kit’s thick block treatment by default; adapt the material and silhouette when the theme calls for wood, metal, paper, glass, neon, or another coherent surface.
 - **Press sinks:** on press, move down exactly 3 (the hard-shadow height) and reduce the bottom lip.
-- **Large radii:** buttons 16–22, panels 20, cards 24–26, chips/pills fully rounded. No square corners.
-- **Two fonts:** Grandstander 800/900 for headings, buttons, and labels; Baloo 2 600–800 for content. Both support Vietnamese diacritics, use the OFL license, and can be bundled with the app.
-- **Ink-outlined headings**, with exactly **one** yellow-highlighted keyword phrase (web: `.ol` + `.y`).
-- **Characters** (when present): single-color round bodies, large eyes, pink cheeks, highlights, and thick ink outlines. Accessories show roles; expressions show state.
-- **Stage** (when selected): a soft sky with drifting clouds; characters and primary objects stand on a layered platform (face, side, ink outline), not floating over a panel.
+- **Shape language follows the theme:** use rounded forms, radii, typography, texture, and depth that support the game’s world. Do not force identical radii, fonts, heading treatments, or shadows on unrelated games.
+- **Typography follows the mood:** choose a readable display/body pairing that supports the selected language and platform. Grandstander/Baloo 2 are the default kit pairing, not a mandatory choice when a better licensed pairing fits the theme.
+- **Characters follow the world:** when characters exist, design their silhouette, material, face, palette, accessories, and expression from their role and setting. The default round avatar is a fallback, not a mandatory character shape.
+- **Stage follows the story:** when a stage is selected, design its environment from the theme (for example a workshop, night sky, underwater scene, library, market, or abstract board). A sky, cloud, and layered grass platform are only the default example; a screen may intentionally use `.stage.flat` or a custom scene.
 
 ## 2. Per-game choices
 
-Change tokens only (web: override in `:root`; native: edit the project’s `tokens.json`). Do not modify components.
+Change tokens and theme assets first (web: override in `:root`; native: edit the project’s `tokens.json`). Do not modify reusable components merely to force a new color. Add a new component or asset only when the theme needs a real structural difference.
 
-- **Stage:** `sky*`, `cloud`, `ground*`. The platform must retain its face, side, and ink outline. Screens that do not need a platform use `.stage.flat`.
-- **Characters:** add accessories to `GameUI.HATS` and choose body colors. Keep the round shape and face style.
+- **Environment:** choose the scene, materials, lighting, texture, atmosphere, and background composition from the theme. Use `sky*`, `cloud`, and `ground*` when they fit; otherwise create a tokenized custom scene. Preserve readable UI contrast and a stable layout boundary.
+- **Characters:** choose a silhouette, material, palette, face language, accessories, and animation that communicate the character’s role. Use `GameUI.HATS` and the default avatar when they fit; create a custom SVG character when they do not. Keep variants distinguishable without relying on hue alone.
 - **Accent colors**, names, content, custom sound (`GameUI.SFX`), and unique mechanics.
+
+### 2.1 Theme-driven art direction (required)
+
+Do not apply the default background, palette, avatar, or font pairing blindly. Before styling a themed game:
+
+1. Extract the theme’s nouns, era, setting, audience, emotional tone, materials, and gameplay verbs from the user’s brief.
+2. Propose **two distinct visual directions**. Each direction must name its background/environment, palette, material/depth, typography mood, character silhouette, accessory language, and motion style.
+3. Recommend one direction and explain the tradeoff in one or two sentences (readability, production effort, platform fit, and emotional match).
+4. Ask the user to choose, unless the user explicitly delegates the art direction. When delegated, choose the strongest direction and state the decision before writing UI.
+5. Apply the chosen direction through tokens and assets, while preserving semantic action colors, contrast, safe areas, layout contract, and accessibility.
+
+The six palettes in `references/palettes.md` are starting points, not a required menu. Derive a custom palette when the theme deserves it. Every generated character must be recognizable from its silhouette and role, not just a recolored copy of the default avatar.
 
 ## 3. Semantic colors
 
@@ -132,6 +143,20 @@ Common to every size:
 | Landscape mobile | Short height: `.split` divides two columns, compresses the heading and stage, and puts the CTA in the right column |
 | Desktop | 1120px-wide column, `.split` = main content + 360px side column, compact CTA in the lower-right corner. **Keyboard shortcuts are required** (Enter = CTA, Esc = close/go back, Space = primary action), with hover and `<kbd>` key hints |
 | Both | Build portrait mobile first, then let `layout: "auto"` expand to desktop from 900px. Check both |
+
+### 4.1 Layout contract (mandatory)
+
+Treat these rules as acceptance criteria, not suggestions:
+
+- **One shell:** use one page shell with `min-height: 100dvh`, a centered max-width, safe-area padding, and a single horizontal gutter token. Do not create a second competing page container.
+- **One scroll owner:** a screen either fits its intended viewport or the screen body scrolls vertically. Never add horizontal scrolling, nested vertical scroll regions, or a fixed-height panel that clips content.
+- **Stable tracks:** every grid/flex child that can shrink has `min-width: 0`; flexible columns use `minmax(0, 1fr)`. Use `aspect-ratio`, `minmax()`, `clamp()`, and intrinsic sizing for boards, stages, toolbars, and cards instead of magic fixed heights.
+- **No layout shifts:** reserve space for images, SVG, avatars, fonts, buttons, meters, and loading states. A label, icon, focus ring, pressed state, or error message must not resize a neighboring control or change the page’s primary alignment.
+- **Bounded content:** headings, names, translations, and user data must wrap or truncate inside their own box (`overflow-wrap:anywhere`, line clamp, or an explicit safe truncation). Never allow long text to push a CTA off-screen.
+- **Alignment:** align repeated items to a shared grid and use the kit spacing tokens. Do not compensate with arbitrary negative margins, transforms, or per-screen pixel nudges.
+- **Positioning:** reserve `position: fixed` for the topbar, modal, toast, and mobile CTA dock. Everything else stays in normal flow so content cannot overlap when text or viewport height changes.
+- **Responsive order:** implement portrait mobile first, then landscape and desktop. At minimum verify 360×800, 390×844, 844×390, 960×900, and 1280×900. Check both orientations after fonts and real content are loaded.
+- **Overflow gate:** before delivery, confirm `scrollWidth <= clientWidth`, no visible clipping, no element crosses the safe area, no fixed control covers content, and no card/column overlaps another at any required viewport.
 
 ## 5. Motion and feedback
 
@@ -170,9 +195,9 @@ Common to every size:
 
 ## 9. Do not
 
-- No UI library; no emoji as system icons (emoji is content only); no bitmap images for UI; no template-style purple gradients; no glassmorphism; no blur shadows as the primary depth.
+- No UI library; no emoji as system icons (emoji is content only); no bitmap images for UI; no generic template gradients, glassmorphism, or blur shadows as the primary depth. A deliberate theme may use unusual lighting or a dark environment when the user requests it and contrast remains accessible.
 - Do not add colors outside the tokens.
-- No full-screen dark background. This style is bright and daytime-oriented. If the user wants a dark UI, state that it conflicts with the style and ask again.
+- Do not force the default daytime background, candy palette, cloud scene, grass platform, round avatar, font pairing, or yellow heading treatment onto every game. Treat them as defaults only.
 - Do not invent features, screens, content, or rules the user did not request.
 
 ## 10. Code standards (every language and technology)
@@ -191,10 +216,11 @@ Details and examples: `references/code-standards.md`. Core rules:
 
 Details: `references/palettes.md`. Core rules:
 
-- **Bright, saturated, cohesive like a box of candy.** All button colors share saturation (0.45–0.95) and lightness (0.50–0.72); no dull colors, harsh neon, or template-style purple gradients.
-- **60 / 30 / 10:** 60% stage (light, calm), 30% panels and objects, 10% vivid accents. Keep the stage lighter than objects so objects stand out.
-- **At most 4–5 color families per screen.** Warm accents contrast with cool backgrounds (or vice versa).
-- **Keep color meanings** (section 3); themes change only the stage and characters.
+- **Cohesive and theme-led:** choose saturation, lightness, temperature, and contrast from the world of the game. Do not force every game to look like candy.
+- **60 / 30 / 10 is a starting balance:** 60% environment, 30% panels/objects, and 10% accents is useful when it supports hierarchy; change the ratio deliberately for a card game, horror game, monochrome puzzle, or other theme.
+- **At most 4–5 dominant color families per screen** unless the game’s identity explicitly depends on a broader system. Name the reason when exceeding it.
+- **Keep semantic action colors** (section 3) readable and consistent; theme colors control the environment, objects, characters, and atmosphere around them.
+- **Characters differ in value, silhouette, accessory, or pattern**, not only hue, so players can distinguish them without color vision.
 - **Characters differ in lightness**, with names or accessories so color-blind players can distinguish them.
 - Tools: `scripts/palette.py` (generate `-d`/`-l`, check contrast and vividness), `GameUI.theme()`, 6 available palettes, `scripts/preview_palettes.py` (previews for the user to choose from).
 
@@ -299,11 +325,12 @@ Classes attached to `<html>` by `init`: `.desk` (desktop or landscape), `.land` 
 4. Button colors have the correct meaning; destructive actions have confirmation with a correctly named red button.
 5. Sound and haptics match the user’s choices; the Sound toggle appears only when sound is enabled.
 6. Test preferred sizes (mobile: 360px and 560px; desktop: 1280px and 960px; “both”: all), toggle High Graphics, and enable reduced motion. On desktop, complete the flow with the keyboard alone.
-7. No colors outside tokens, no emoji as system icons, and no `alert()`.
-8. User data is escaped; secrets are removed from the screen after viewing.
-9. **Technology:** code matches the user’s selected technology, uses the right directories, and follows project lint/format rules.
-10. **No rewrites:** run `find_existing.py` for every new function; no duplicate of the kit or existing code.
-11. **Clean code:** short single-purpose functions, clear names, separated `data / game / services / ui`, no magic numbers, hard-coded colors, or dead code.
-12. **Color:** `palette.py check` has no errors; inspect the render, with vivid harmonious colors, a calm stage, and prominent objects.
-13. **Smoothness:** animations use only `transform`/`opacity`, loading does not shift layout, no double taps, and low-end testing is complete.
-14. **Visuals:** `render_check.py` ran without errors **and the image was opened and inspected visually**; visuals fit the frame, include all variants, and share one line family.
+7. **Layout:** the layout contract passes; there is one scroll owner, no horizontal overflow, no clipping/overlap, stable tracks, and all required viewport sizes render with real content.
+8. No colors outside tokens, no emoji as system icons, and no `alert()`.
+9. User data is escaped; secrets are removed from the screen after viewing.
+10. **Technology:** code matches the user’s selected technology, uses the right directories, and follows project lint/format rules.
+11. **No rewrites:** run `find_existing.py` for every new function; no duplicate of the kit or existing code.
+12. **Clean code:** short single-purpose functions, clear names, separated `data / game / services / ui`, no magic numbers, hard-coded colors, or dead code.
+13. **Color:** `palette.py check` has no errors; inspect the render, with vivid harmonious colors, a calm stage, and prominent objects.
+14. **Smoothness:** animations use only `transform`/`opacity`, loading does not shift layout, no double taps, and low-end testing is complete.
+15. **Visuals:** `render_check.py` ran without errors **and the image was opened and inspected visually**; visuals fit the frame, include all variants, and share one line family.

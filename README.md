@@ -12,6 +12,7 @@ This skill defines the interface and quality workflow, but does not decide the g
 - Layouts for portrait mobile, landscape mobile, desktop, and automatic adaptation.
 - Semantic color rules, contrast, hit areas, focus, reduced motion, and user-data protection.
 - Tools for palette checks, SVG rendering, palette previews, and finding existing project code.
+- Theme-driven art direction: the agent proposes visual directions and adapts backgrounds, palettes, materials, typography, and character silhouettes to the game.
 
 ## Installation
 
@@ -94,6 +95,16 @@ Use the game-ui skill to design the settings screen for my game.
 
 For project-specific use, install it under `.github/skills/game-ui/` for GitHub Copilot, `.claude/skills/game-ui/` for Claude Code, or the agent's documented skills directory. The folder name and the frontmatter `name` must both be `game-ui`.
 
+This repository also includes `AGENTS.md` with project-level instructions. Where the agent supports `AGENTS.md`, those instructions are loaded on each run and tell the agent when to use `game-ui`.
+
+Install the local source into an agent directory with Make:
+
+```bash
+make install-agent
+make install-agent AGENT_DIR=.claude/skills
+make install-agent AGENT_DIR=.github/skills
+```
+
 ## Web initialization example
 
 After copying `assets/kit.css` and `assets/kit.js`, initialize the kit with the choices confirmed by the user:
@@ -143,6 +154,7 @@ After copying `assets/kit.css` and `assets/kit.js`, initialize the kit with the 
 | `README.md` | English and Vietnamese documentation |
 | `CHANGELOG.md` | Versioned release notes |
 | `install.sh` | One-command installer for the latest release |
+| `AGENTS.md` | Project-level agent instructions |
 | `LICENSE` | Repository license |
 
 ## Validation tools
@@ -289,6 +301,7 @@ Mobile dọc dùng `mobile`, mobile ngang dùng `landscape`, desktop dùng `desk
 - `releases/game-ui.skill`: package để cài đặt.
 - `CHANGELOG.md`: lịch sử thay đổi theo version.
 - `install.sh`: script cài đặt release mới nhất bằng một lệnh.
+- `AGENTS.md`: hướng dẫn agent cấp project, yêu cầu dùng `game-ui` cho task UI game.
 - `README.md`: tài liệu tiếng Anh và tiếng Việt.
 - `LICENSE`: giấy phép của repository.
 

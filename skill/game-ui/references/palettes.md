@@ -42,11 +42,13 @@ Stage colors (`--sky-*`, `--ground-*`) have no generated pairs; set them manuall
 
 ---
 
-## Available palettes
+## Available palettes and theme directions
 
-Each palette is a `:root` override block (web). For native platforms, change the corresponding values in `tokens.json` under `color.scene`. Keep button colors (green, red, blue…) unchanged so their meanings stay stable; change only the stage.
+These palettes are starting points, not mandatory presets. A `:root` block is provided for web; native platforms change the corresponding values in `tokens.json` under `color.scene`. Keep button colors (green, red, blue…) semantically readable, but let the environment, objects, characters, typography, and materials evolve with the game’s theme.
 
-### Sweet candy (default)
+When none of the presets fits, propose two custom theme directions, derive a tokenized palette, and explain why the recommended direction fits the game. Do not recolor the default scene and call that a new art direction.
+
+### Sweet candy (fallback default)
 Green grass and a light-blue sky. Fun, safe, and suitable for any game. No override needed.
 
 ### Sunny sea
