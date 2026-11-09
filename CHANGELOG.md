@@ -5,6 +5,18 @@ All notable changes to this project are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and versions follow [Semantic Versioning](https://semver.org/).
 
+## [1.1.0] - 2026-11-09
+
+### Added
+
+- Agent-specific installation commands for Copilot, Claude, Codex, Gemini, and custom directories.
+- Stable `game-ui.skill` release asset for the latest-release installer URL.
+- Manual release workflow dispatch for repairing or updating an existing tag release.
+
+### Fixed
+
+- Installer downloads now resolve the stable release asset correctly.
+
 ## [1.0.0] - 2026-11-09
 
 ### Added
