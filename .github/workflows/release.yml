@@ -4,6 +4,12 @@ on:
   push:
     tags:
       - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: "Release tag to create or update, for example v1.0.0"
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -18,7 +24,7 @@ jobs:
 
       - name: Check version tag
         env:
-          TAG_NAME: ${{ github.ref_name }}
+          TAG_NAME: ${{ github.event_name == 'workflow_dispatch' && inputs.tag_name || github.ref_name }}
         run: |
           test "${TAG_NAME#v}" = "$(tr -d '[:space:]' < VERSION)"
 
@@ -28,9 +34,17 @@ jobs:
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG_NAME: ${{ github.ref_name }}
+          TAG_NAME: ${{ github.event_name == 'workflow_dispatch' && inputs.tag_name || github.ref_name }}
         run: |
-          gh release create "$TAG_NAME" \
-            "releases/game-ui-v${TAG_NAME#v}.skill" \
-            --title "game-ui $TAG_NAME" \
-            --generate-notes
+          if gh release view "$TAG_NAME" >/dev/null 2>&1; then
+            gh release upload "$TAG_NAME" \
+              "releases/game-ui-v${TAG_NAME#v}.skill" \
+              releases/game-ui.skill \
+              --clobber
+          else
+            gh release create "$TAG_NAME" \
+              "releases/game-ui-v${TAG_NAME#v}.skill" \
+              releases/game-ui.skill \
+              --title "game-ui $TAG_NAME" \
+              --generate-notes
+          fi
