@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#cfe6f7">
+<title>Game UI · Viền mực, khối dày</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Grandstander:wght@800;900&display=swap" rel="stylesheet">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="kit.css">
+<style>
+  html{scroll-behavior:smooth;scroll-padding-top:76px}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  .wrap{min-height:0}
+  .nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:18px;padding:12px 0;margin:0 calc(var(--gutter)*-1);padding-inline:var(--gutter);
+    background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid color-mix(in srgb,var(--ink) 12%,transparent)}
+  .nav::-webkit-scrollbar{display:none}
+  .nav a{flex:none;text-decoration:none;color:var(--ink)}
+  .brand{display:flex;align-items:center;gap:9px;margin-right:auto;font-family:var(--f-display);font-weight:900;font-size:1.05rem;white-space:nowrap}
+  .brand-mark{display:grid;place-items:center;width:34px;height:34px;background:var(--yellow);border:var(--bw) solid var(--ink);border-radius:12px;box-shadow:0 3px 0 var(--ink);font-size:.95rem}
+  .nav-links{display:flex;gap:16px;align-items:center}
+  .nav-link{font-family:var(--f-display);font-weight:800;font-size:.86rem;color:var(--mut)!important}
+  .nav-link:hover{color:var(--ink)!important}
+  .nav .btn{min-height:38px;padding:5px 13px 8px;font-size:.76rem;border-radius:14px}
+  .hero{position:relative;display:grid;grid-template-columns:minmax(0,1.02fr) minmax(320px,.98fr);align-items:center;padding:clamp(38px,7vw,86px) 0 clamp(28px,5vw,60px);gap:clamp(24px,6vw,72px);text-align:left}
+  .hero-copy{display:flex;flex-direction:column;align-items:flex-start;gap:18px}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--mut);font-family:var(--f-display);font-weight:800;font-size:.82rem;letter-spacing:.07em;text-transform:uppercase}
+  .eyebrow::before{content:"";width:9px;height:9px;background:var(--green);border:2px solid var(--ink);border-radius:50%;box-shadow:2px 2px 0 var(--ink)}
+  .hero .h1{max-width:8ch;font-size:clamp(3.2rem,8vw,6.6rem);line-height:.91;letter-spacing:-.02em}
+  .hero p{max-width:38ch;margin:0;color:var(--mut);font-size:clamp(1rem,2vw,1.2rem);line-height:1.5}
+  .cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-start}
+  .hero-visual{position:relative;min-height:330px;display:grid;place-items:center;padding:20px 10px 0}
+  .hero-visual::before{content:"";position:absolute;inset:10% 4% 5%;background:var(--yellow-l);border:var(--bw) solid var(--ink);border-radius:38% 44% 34% 48%;transform:rotate(-4deg);box-shadow:8px 8px 0 var(--ink);opacity:.9}
+  .hero-visual .stage{position:relative;width:100%;background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,.15));border:var(--bw) solid var(--ink);border-radius:28px;padding:28px 14px 0;box-shadow:0 5px 0 var(--ink);overflow:hidden}
+  .hero-visual .actors{min-height:190px;align-items:end}
+  .hero-visual .plinth{margin-top:-2px}
+  .hero-note{position:absolute;right:-2px;top:18px;z-index:2;transform:rotate(5deg);background:var(--green);color:#fff;-webkit-text-stroke:.08em var(--ink);paint-order:stroke fill;border:var(--bw) solid var(--ink);border-radius:14px;padding:8px 13px;font-family:var(--f-display);font-weight:900;box-shadow:3px 3px 0 var(--ink)}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:3px}
+  .hero-meta .pill{background:rgba(255,255,255,.6)}
+  .value-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;overflow:hidden;background:var(--ink);border:var(--bw) solid var(--ink);border-radius:20px;box-shadow:0 4px 0 var(--ink);margin-bottom:20px}
+  .value-item{min-height:96px;padding:16px;background:rgba(255,255,255,.58);display:flex;flex-direction:column;justify-content:center;gap:2px}
+  .value-item strong{font-family:var(--f-display);font-size:1.2rem}
+  .value-item span{color:var(--mut);font-size:.88rem}
+  .cta .btn{text-decoration:none}
+  .story{display:flex;flex-direction:column;gap:12px}
+  .story>header{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .story>header p{margin:0;flex-basis:100%}
+  .demo{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+  .demo.col{align-items:stretch}
+  details summary{cursor:pointer;font-family:var(--f-display);font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);min-height:32px;display:flex;align-items:center}
+  pre{margin:8px 0 0;padding:12px;border:var(--bw) solid var(--ink);border-radius:14px;background:var(--ink);color:#e8f2f6;overflow:auto;font:600 .8rem/1.5 ui-monospace,Menlo,Consolas,monospace;max-height:320px}
+  .swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:12px}
+  .sw{display:flex;flex-direction:column;gap:4px;font-size:.8rem}
+  .sw i{display:block;height:54px;border:var(--bw) solid var(--ink);border-radius:14px;background:var(--c);box-shadow:inset 0 -6px 0 var(--cd,transparent),0 var(--lift) 0 var(--ink)}
+  .sw b{font-family:var(--f-display)}
+  .icons{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:12px}
+  .icons div{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:.78rem}
+  .icons .rbtn{pointer-events:none}
+  .hdr{display:flex;flex-direction:column;gap:2px;align-items:center}
+  footer{padding:24px 0 8px}
+  @media (max-width:760px){
+    .nav{gap:10px}.nav-links{display:none}.nav .btn{margin-left:auto}
+    .hero{grid-template-columns:1fr;padding-top:42px;gap:22px}.hero-copy{align-items:center;text-align:center}.hero .h1{max-width:9ch}.hero p{max-width:32ch}.cta{justify-content:center}.hero-visual{min-height:280px}.hero-visual .actors{min-height:150px}.hero-note{right:4px;top:7px}
+    .value-strip{grid-template-columns:repeat(2,1fr)}.value-item{min-height:82px;padding:13px}
+  }
+  /* Desktop: hai cột (story xếp lưới) */
+  .desk .stories{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;align-items:start}
+  .desk .stories .wide{grid-column:1/-1}
+  .stories{display:flex;flex-direction:column;gap:14px}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+  <nav class="nav" aria-label="Mục lục">
+    <a class="brand" href="#top" aria-label="Game UI về đầu trang"><span class="brand-mark">✦</span><span>Game UI</span></a>
+    <div class="nav-links">
+      <a class="nav-link" href="#colors">Bộ màu</a><a class="nav-link" href="#buttons">Component</a><a class="nav-link" href="#stage">Sân khấu</a>
+    </div>
+    <a class="btn green" href="kit.css" download><span>Tải kit</span></a>
+  </nav>
+
+  <!-- ========== LANDING ========== -->
+  <header class="hero" id="top">
+    <div class="hero-copy">
+      <span class="eyebrow">Open-source game interface kit</span>
+      <h1 class="ol h1">Giao diện game <span class="y">có cá tính.</span></h1>
+      <p>Khung UI tươi sáng, phản hồi rõ ràng và sẵn sàng mở rộng. Dựng trải nghiệm chơi mượt bằng CSS + JS thuần, không phụ thuộc thư viện.</p>
+      <div class="cta">
+        <a class="btn big green" href="#buttons" data-key="Enter"><span>Khám phá component</span></a>
+        <a class="btn big azure" href="README.md"><span>Đọc tài liệu</span></a>
+      </div>
+      <div class="hero-meta"><span class="pill green">MIT-ready</span><span class="pill blue">Responsive</span><span class="pill">Không framework</span></div>
+    </div>
+    <div class="hero-visual" aria-label="Minh họa các nhân vật trong giao diện game">
+      <span class="hero-note">ready to play!</span>
+      <div class="stage"><div class="actors" id="hero-actors"></div><div class="plinth wide"></div></div>
+    </div>
+  </header>
+
+  <section class="value-strip" aria-label="Điểm nổi bật">
+    <div class="value-item"><strong>01</strong><span>Token có hệ thống</span></div>
+    <div class="value-item"><strong>02</strong><span>Phản hồi khi tương tác</span></div>
+    <div class="value-item"><strong>03</strong><span>Responsive từ đầu</span></div>
+    <div class="value-item"><strong>04</strong><span>Accessibility tích hợp</span></div>
+  </section>
+
+  <!-- ========== STORYBOOK ========== -->
+  <div class="stories">
+
+    <section class="panel story wide" id="colors">
+      <header><h2 class="h2 ol">Màu <span class="y">token</span></h2><p class="mut">Mỗi màu đi theo cặp <code>--x</code> / <code>--x-d</code>. Đổi game chỉ override token.</p></header>
+      <div class="demo swatches">
+        <div class="sw"><i style="--c:var(--ink)"></i><b>ink</b>viền, chữ</div>
+        <div class="sw"><i style="--c:var(--yellow);--cd:var(--yellow-d)"></i><b>yellow</b>phụ / đang chọn</div>
+        <div class="sw"><i style="--c:var(--green);--cd:var(--green-d)"></i><b>green</b>CTA chính</div>
+        <div class="sw"><i style="--c:var(--red);--cd:var(--red-d)"></i><b>red</b>phá huỷ</div>
+        <div class="sw"><i style="--c:var(--blue);--cd:var(--blue-d)"></i><b>blue</b>an toàn</div>
+        <div class="sw"><i style="--c:var(--azure);--cd:var(--azure-d)"></i><b>azure</b>thông tin</div>
+        <div class="sw"><i style="--c:var(--teal);--cd:var(--teal-d)"></i><b>teal</b>hệ thống</div>
+        <div class="sw"><i style="--c:var(--card)"></i><b>card</b>bề mặt</div>
+      </div>
+    </section>
+
+    <section class="panel story" id="type">
+      <header><h2 class="h2 ol">Chữ</h2><p class="mut">Grandstander cho tiêu đề, Baloo 2 cho nội dung. Đúng một cụm tô vàng.</p></header>
+      <div class="demo col">
+        <h1 class="ol h1">Tiêu đề <span class="y">lớn</span></h1>
+        <h2 class="ol h2">Tiêu đề <span class="y">vừa</span></h2>
+        <h3 class="h3">Tiêu đề nhỏ</h3>
+        <div class="label">Nhãn viết hoa</div>
+        <p class="mut" style="margin:0">Chữ phụ dùng màu <code>mut</code>, không nhạt hơn.</p>
+      </div>
+    </section>
+
+    <section class="panel story" id="buttons">
+      <header><h2 class="h2 ol">Nút <span class="y">chữ</span></h2><p class="mut">Thử bấm: nút lún xuống 3px. Màu theo nghĩa.</p></header>
+      <div class="demo">
+        <button class="btn green">Chơi ngay</button>
+        <button class="btn">Thêm</button>
+        <button class="btn red">Thoát</button>
+        <button class="btn blue">Ở lại</button>
+        <button class="btn azure">Hướng dẫn</button>
+        <button class="btn teal">Cài đặt</button>
+        <button class="btn sm">Nhỏ</button>
+        <button class="btn" disabled>Tắt</button>
+      </div>
+      <div class="demo col"><button class="btn big full green">Bắt đầu</button></div>
+    </section>
+
+    <section class="panel story" id="icon-buttons">
+      <header><h2 class="h2 ol">Nút <span class="y">icon</span></h2><p class="mut">Luôn có <code>aria-label</code>. <code>.sm</code>/<code>.xs</code> chỉ cho thao tác phụ.</p></header>
+      <div class="demo">
+        <button class="rbtn" data-icon="gear" aria-label="Cài đặt"></button>
+        <button class="rbtn red" data-icon="close" aria-label="Thoát"></button>
+        <button class="rbtn yellow" data-icon="star" aria-label="Yêu thích"></button>
+        <button class="rbtn blue" data-icon="home" aria-label="Về nhà"></button>
+        <button class="rbtn sm" data-icon="plus" aria-label="Thêm"></button>
+        <button class="rbtn xs red" data-icon="trash" aria-label="Xoá"></button>
+      </div>
+    </section>
+
+    <section class="panel story" id="badges">
+      <header><h2 class="h2 ol">Chip, pill <span class="y">&amp; meter</span></h2><p class="mut">Thanh đổi màu theo ngưỡng: xanh &gt; 50%, vàng &gt; 20%, đỏ và đập nhịp ≤ 20%.</p></header>
+      <div class="demo">
+        <span class="chip">Lượt 2/4</span>
+        <span class="pill">Mới</span><span class="pill green">Thắng</span><span class="pill red">Thua</span><span class="pill blue">Online</span>
+      </div>
+      <div class="demo col">
+        <div class="meter" id="meter" aria-label="Thời gian"><i></i></div>
+        <div class="row" id="meter-ctl"><button class="btn sm green" data-v="0.8">80%</button><button class="btn sm" data-v="0.4">40%</button><button class="btn sm red" data-v="0.15">15%</button></div>
+      </div>
+    </section>
+
+    <section class="panel story" id="panels">
+      <header><h2 class="h2 ol">Panel &amp; <span class="y">thẻ</span></h2></header>
+      <div class="demo col">
+        <div class="panel"><div class="label">Panel lồng</div><span>Khung nội dung có mép dưới và bóng cứng.</span></div>
+        <div class="card"><b class="disp">Thẻ</b><br><span class="mut">Bo 25, nền kem.</span></div>
+      </div>
+    </section>
+
+    <section class="panel story" id="forms">
+      <header><h2 class="h2 ol">Form <span class="y">điều khiển</span></h2></header>
+      <div class="demo col">
+        <label class="sr" for="demo-in">Tên</label>
+        <input class="field" id="demo-in" placeholder="Nhập tên…">
+        <div class="seg" id="demo-seg" role="group" aria-label="Chủ đề">
+          <button type="button" aria-pressed="true">Đồ ăn</button><button type="button" aria-pressed="false">Con vật</button><button type="button" aria-pressed="false">Địa điểm</button>
+        </div>
+        <div class="grid2" id="demo-choice">
+          <button type="button" class="choice" aria-pressed="true"><b>Dễ</b></button>
+          <button type="button" class="choice" aria-pressed="false"><b>Khó</b></button>
+        </div>
+        <div class="setting"><div class="txt"><b>Đồ hoạ cao</b><small>Thêm bóng và chiều sâu</small></div>
+          <button type="button" class="tog" id="demo-tog" aria-pressed="false" aria-label="Đồ hoạ cao"></button></div>
+      </div>
+    </section>
+
+    <section class="panel story" id="lists">
+      <header><h2 class="h2 ol">Danh <span class="y">sách</span></h2><p class="mut">Thêm/xoá đúng một dòng.</p></header>
+      <ul class="list" id="demo-list"></ul>
+      <div class="row"><button class="btn sm" id="demo-add">Thêm người</button></div>
+    </section>
+
+    <section class="panel story" id="flip">
+      <header><h2 class="h2 ol">Thẻ <span class="y">lật</span></h2></header>
+      <div class="flip" id="demo-flip"><div class="in">
+        <div class="card front center" style="min-height:140px;display:grid;place-items:center"><span class="ol h1">?</span></div>
+        <div class="card back center" style="min-height:140px;display:grid;place-items:center"><b class="disp h3">Bất ngờ!</b></div>
+      </div></div>
+      <div class="row"><button class="btn green" id="demo-flip-btn">Lật bài</button></div>
+    </section>
+
+    <section class="panel story wide" id="stage">
+      <header><h2 class="h2 ol">Sân khấu &amp; <span class="y">nhân vật</span></h2><p class="mut">Nhân vật đứng trên bệ nhiều lớp. Đổi chất liệu bệ bằng <code>--ground-*</code>.</p></header>
+      <div class="stage"><div class="actors" id="demo-actors"></div><div class="plinth wide"></div></div>
+      <div class="label">Nét mặt</div><div class="demo" id="demo-moods"></div>
+      <div class="label">Phụ kiện</div><div class="demo" id="demo-hats"></div>
+    </section>
+
+
+    <section class="panel story" id="overlays">
+      <header><h2 class="h2 ol">Overlay &amp; <span class="y">phản hồi</span></h2><p class="mut">Không dùng <code>alert()</code>. Có bẫy focus, Esc để đóng.</p></header>
+      <div class="demo">
+        <button class="btn sm green" data-o="ok">Toast ok</button>
+        <button class="btn sm red" data-o="err">Toast lỗi</button>
+        <button class="btn sm blue" data-o="confirm">Xác nhận</button>
+        <button class="btn sm azure" data-o="sheet">Sheet</button>
+        <button class="btn sm teal" data-o="settings">Cài đặt</button>
+        <button class="btn sm" data-o="win">Ăn mừng</button>
+      </div>
+    </section>
+
+    <section class="panel story wide" id="icons">
+      <header><h2 class="h2 ol">Bộ <span class="y">icon</span></h2><p class="mut"><code>GameUI.icon(name)</code>, hai lớp, theo màu chữ.</p></header>
+      <div class="icons" id="icon-grid"></div>
+    </section>
+  </div>
+
+  <footer class="center mut"><span>Dựng từ skill <b>web-game-ui</b> · <code>kit.css</code> + <code>kit.js</code></span></footer>
+</main>
+
+<script src="kit.js"></script>
+<script>
+(() => {
+  const G = GameUI, { $ } = G, $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  G.init({ id: "game-ui-storybook", layout: "auto", sound: true, haptics: true });
+
+  // Chụp mã nguồn của mỗi story TRƯỚC khi gắn icon/nhân vật động.
+  const snippet = (html) => html.replace(/\s*data-icon="(\w+)"([^>]*)>\s*<\/button>/g, '$2>${GameUI.icon("$1")}</button>')
+    .replace(/^\s*\n/gm, "").replace(/\n {6,}/g, "\n  ").trim();
+  $$(".story").forEach((s) => {
+    const demo = s.querySelector(".demo, .stage, .list, .flip");
+    if (!demo || s.id === "icons" || s.id === "colors") return;
+    const code = snippet(s.querySelector(".demo, .stage, .list, .flip").outerHTML);
+    const d = document.createElement("details");
+    d.innerHTML = "<summary>Mã HTML</summary><pre></pre>";
+    d.querySelector("pre").textContent = code;
+    s.append(d);
+  });
+
+  // Icon cho mọi nút có data-icon
+  $$("[data-icon]").forEach((b) => b.innerHTML = G.icon(b.dataset.icon));
+
+  // Hero
+  $("#hero-actors").innerHTML = G.PALETTE.slice(0, 5).map((c, i) =>
+    G.avatar({ color: c, size: 64, cls: "bounce", hat: ["crown", "party", "wizard", "cap", "bow"][i], mood: "grin", style: `--dl:-${i * 0.4}s` })).join("");
+
+  // Sân khấu demo
+  const MOODS = ["happy", "grin", "calm", "sad", "shock", "angry", "sly", "sleep"];
+  const HATS = ["none", "crown", "cap", "party", "detective", "wizard", "bow", "leaf", "mask"];
+  $("#demo-actors").innerHTML = ["An", "Bình", "Chi", "Dũng"].map((n, i) =>
+    G.avatar({ color: G.PALETTE[i], name: n, size: 72, cls: "bounce", mood: MOODS[i], hat: HATS[i + 1], style: `--dl:-${i * 0.5}s` })).join("");
+  $("#demo-moods").innerHTML = MOODS.map((m, i) => G.avatar({ color: G.PALETTE[i % 8], mood: m, size: 52, name: m })).join("");
+  $("#demo-hats").innerHTML = HATS.map((h, i) => G.avatar({ color: G.PALETTE[i % 8], hat: h, size: 52, name: h })).join("");
+
+  // Icon grid
+  $("#icon-grid").innerHTML = "back home gear close plus minus trash eye replay check info play sound mute star".split(" ")
+    .map((n) => `<div><span class="rbtn">${G.icon(n)}</span>${n}</div>`).join("");
+
+  // Meter
+  G.meter($("#meter"), 0.8);
+  $("#meter-ctl").addEventListener("click", (e) => { const b = e.target.closest("[data-v]"); if (b) G.meter($("#meter"), +b.dataset.v); });
+
+  // Form
+  $("#demo-seg").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) $$("button", $("#demo-seg")).forEach((x) => G.setPressed(x, x === b)); });
+  $("#demo-choice").addEventListener("click", (e) => { const b = e.target.closest(".choice"); if (b) $$(".choice", $("#demo-choice")).forEach((x) => G.setPressed(x, x === b)); });
+  $("#demo-tog").addEventListener("click", (e) => { const t = e.currentTarget; G.setPressed(t, t.getAttribute("aria-pressed") !== "true"); });
+
+  // Danh sách
+  const NAMES = ["An", "Bình", "Chi", "Dũng", "Hà", "Khoa"];
+  const list = $("#demo-list");
+  const row = (n) => `<li class="enter"><span class="name">${G.esc(n)}</span><span class="acts"><button class="rbtn xs red" data-sfx="none" aria-label="Loại ${G.esc(n)}">${G.icon("close")}</button></span></li>`;
+  list.innerHTML = NAMES.slice(0, 3).map(row).join("");
+  $("#demo-add").addEventListener("click", () => {
+    if (list.children.length >= NAMES.length) return G.toast("Hết tên rồi nha!", { type: "err" });
+    list.insertAdjacentHTML("beforeend", row(NAMES[list.children.length])); G.sfx("add");
+  });
+  list.addEventListener("click", (e) => { const b = e.target.closest(".rbtn"); if (b) { b.closest("li").remove(); G.sfx("remove"); } });
+
+  // Thẻ lật
+  $("#demo-flip-btn").addEventListener("click", (e) => {
+    const f = $("#demo-flip"), open = f.classList.toggle("open");
+    G.setText(e.currentTarget, open ? "Úp lại" : "Lật bài"); G.sfx("flip");
+  });
+
+  // Overlay
+  $("#overlays").addEventListener("click", async (e) => {
+    const b = e.target.closest("[data-o]"); if (!b) return;
+    switch (b.dataset.o) {
+      case "ok": G.toast("Đã lưu!", { type: "ok" }); break;
+      case "err": G.toast("Nhập tên trước đã nhé!", { type: "err" }); break;
+      case "confirm":
+        G.toast((await G.confirm({ title: "Loại <span class='y'>An</span>?", text: "Người này sẽ rời nhóm.", ok: "Loại!" })) ? "Đã loại" : "Đã huỷ", { type: "ok" }); break;
+      case "sheet": G.sheet({ title: '<span class="ol h2">Cách <span class="y">chơi</span></span>', body: "<p style='margin:0'>Sheet tuỳ biến có bẫy focus.</p>", actions: [{ label: "Hiểu rồi", cls: "green", value: true }] }); break;
+      case "settings": G.openSettings(); break;
+      case "win": G.celebrate({ colors: ["var(--green)", "var(--yellow)", "#fff"], avatars: $$("#demo-actors .avatar") }); break;
+    }
+  });
+})();
+</script>
+</body>
+</html>

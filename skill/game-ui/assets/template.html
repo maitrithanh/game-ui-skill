@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#cfe6f7">
+<title>Game mẫu (ví dụ cách ghép kit)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Grandstander:wght@800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="kit.css">
+<style>
+  /* ĐỔI THEO GAME: chỉ override token. Ví dụ cảnh "đảo băng":
+  :root{--ground-top:#e8f6ff;--ground-top-2:#cfeafc;--ground-edge:#9fd0ef;--ground-side:#7fb4d8;--ground-side-d:#5b92ba;--sky-bot:#e4f1fb}
+  */
+  .hero{padding-top:4dvh}
+  .hero p{margin:6px 0 0}
+  .peek-card .front,.peek-card .back{min-height:min(34dvh,260px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center}
+  .secret-word{font-size:clamp(2rem,10vw,2.8rem)}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+  <!-- ========== 1. THIẾT LẬP ========== -->
+  <section class="screen" id="s-setup" aria-labelledby="h-setup">
+    <div class="topbar">
+      <span></span>
+      <span class="chip">Thiết lập</span>
+      <button class="rbtn" data-act="settings" aria-label="Cài đặt"></button>
+    </div>
+
+    <div class="split">
+      <div class="main">
+      <header class="hero col center">
+        <h1 id="h-setup" class="ol h1">Ai là <span class="y">gián điệp</span>?</h1>
+        <p class="mut">Một người nhận từ khác. Tìm ra người đó!</p>
+      </header>
+
+      <div class="stage" aria-hidden="true"><div class="actors" id="setup-actors"></div><div class="plinth"></div></div>
+      </div>
+      <div class="side">
+      <div class="panel">
+        <div class="label">Người chơi <span id="count" class="pill">0</span></div>
+        <form class="row" id="add-form" autocomplete="off">
+          <label class="sr" for="name-in">Tên người chơi</label>
+          <input class="field" id="name-in" maxlength="16" placeholder="Nhập tên…" enterkeyhint="done">
+          <button class="btn" data-sfx="none" type="submit">Thêm</button>
+        </form>
+        <ul class="list" id="players"></ul>
+      </div>
+
+      <div class="panel">
+        <div class="label">Chủ đề</div>
+        <div class="seg" id="topics" role="group" aria-label="Chủ đề"></div>
+      </div>
+        <div class="dock">
+          <button class="btn big full green" data-act="start" data-key="Enter">Bắt đầu</button>
+          <button class="btn full azure" data-act="help">Hướng dẫn</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 2. CHƠI (chuyền máy xem từ khoá) ========== -->
+  <section class="screen play" id="s-play" aria-labelledby="h-play">
+    <div class="topbar">
+      <button class="rbtn red" data-act="quit" data-key="Escape" aria-label="Thoát ván"></button>
+      <span class="chip" id="play-chip">Lượt 1/4</span>
+      <button class="rbtn" data-act="settings" aria-label="Cài đặt"></button>
+    </div>
+    <h2 id="h-play" class="ol h2 center" style="text-align:center">Đưa máy cho <span class="y" id="turn-name"></span></h2>
+    <div class="meter" id="progress" aria-hidden="true"><i></i></div>
+
+    <div class="flip peek-card grow" id="peek">
+      <div class="in">
+        <div class="card front"><div id="turn-av"></div><b>Chỉ mình bạn được xem</b><span class="mut">Bấm “Xem từ” rồi che màn hình</span></div>
+        <div class="card back" id="secret" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <div class="dock">
+      <button class="btn big full green" id="peek-btn" data-act="peek" data-key="Space"><span id="peek-lb">Xem từ</span></button>
+    </div>
+  </section>
+
+  <!-- ========== 3. TIẾT LỘ ========== -->
+  <section class="screen play" id="s-reveal" aria-labelledby="h-reveal">
+    <div class="topbar">
+      <button class="rbtn red" data-act="quit" data-key="Escape" aria-label="Thoát ván"></button>
+      <span class="chip">Tiết lộ</span>
+      <button class="rbtn" data-act="settings" aria-label="Cài đặt"></button>
+    </div>
+    <h2 id="h-reveal" class="ol h2 center" style="text-align:center">Gián điệp <span class="y">là ai</span>?</h2>
+    <div class="flip grow" id="reveal-card" style="display:grid;align-content:center">
+      <div class="in">
+        <div class="card front center" style="min-height:220px;display:grid;place-items:center"><span class="ol h1">?</span></div>
+        <div class="card back center" style="min-height:220px;display:grid;place-items:center;gap:6px"></div>
+      </div>
+    </div>
+    <div class="dock"><button class="btn big full green" data-act="do-reveal" data-key="Space">Lật bài</button></div>
+  </section>
+
+  <!-- ========== 4. KẾT QUẢ ========== -->
+  <section class="screen" id="s-result" aria-labelledby="h-result">
+    <div class="topbar">
+      <button class="rbtn" data-act="home" data-key="Escape" aria-label="Về nhà"></button>
+      <span class="chip">Kết quả</span>
+      <button class="rbtn" data-act="settings" aria-label="Cài đặt"></button>
+    </div>
+    <h2 id="h-result" class="ol h1 center" style="text-align:center"><span class="y">Xong</span> ván!</h2>
+    <div class="stage"><div class="actors" id="result-actors"></div><div class="plinth wide"></div></div>
+    <div class="panel col center" id="result-text"></div>
+    <div class="dock">
+      <button class="btn big full" data-act="replay" data-key="Enter">Chơi lại</button>
+    </div>
+  </section>
+</main>
+
+<script src="kit.js"></script>
+<script>
+(() => {
+  const G = GameUI, { $, esc } = G;
+  // ĐÂY LÀ VÍ DỤ. Với game thật, mọi giá trị dưới đây lấy từ câu trả lời của người dùng ở Bước 0,
+  // và nội dung game (tên, luật, màn) là của người dùng, không copy từ template này.
+  G.init({
+    id: "spy-demo",
+    layout: "auto",   // "mobile" | "landscape" | "desktop" | "auto"
+    sound: true,      // false → không tạo AudioContext, ẩn công tắc Âm thanh
+    haptics: true,    // rung (chỉ trên máy hỗ trợ)
+  });
+
+  /* ---------- Dữ liệu ---------- */
+  const TOPICS = {
+    "🍜 Đồ ăn": [["Phở", "Bún bò"], ["Bánh mì", "Bánh bao"], ["Trà sữa", "Cà phê sữa"]],
+    "🐾 Con vật": [["Mèo", "Hổ"], ["Vịt", "Ngỗng"], ["Cá heo", "Cá mập"]],
+    "🏖️ Địa điểm": [["Bãi biển", "Hồ bơi"], ["Chợ", "Siêu thị"], ["Rạp phim", "Nhà hát"]],
+  };
+  const state = {
+    players: G.store.get("players", []),        // [{name, color}]
+    topic: G.store.get("topic", Object.keys(TOPICS)[0]),
+    round: null,                                 // {words[], spy, turn}
+  };
+  const save = () => { G.store.set("players", state.players); G.store.set("topic", state.topic); };
+
+  /* ---------- Icon cho nút hệ thống (dựng một lần) ---------- */
+  const ICON = { settings: "gear", quit: "close", home: "home" };
+  document.querySelectorAll(".rbtn[data-act]").forEach((b) => b.innerHTML = G.icon(ICON[b.dataset.act]));
+
+  /* ================= THIẾT LẬP: build một lần, update cục bộ ================= */
+  const list = $("#players"), actors = $("#setup-actors");
+  const rowHTML = (p) => `<li class="enter"><span class="name">${esc(p.name)}</span>
+      <span class="acts"><button class="rbtn xs red" data-act="remove" data-sfx="none" aria-label="Loại ${esc(p.name)}">${G.icon("close")}</button></span></li>`;
+  const avHTML = (p, i) => G.avatar({ color: p.color, name: p.name, size: 54, cls: "bounce enter", hat: i === 0 ? "crown" : "none", style: `--dl:-${(i * 0.4).toFixed(1)}s` });
+
+  function buildSetup() {
+    list.innerHTML = state.players.map(rowHTML).join("");
+    actors.innerHTML = state.players.slice(0, 8).map(avHTML).join("");
+    $("#topics").innerHTML = Object.keys(TOPICS).map((t) =>
+      `<button type="button" aria-pressed="${t === state.topic}">${esc(t)}</button>`).join("");
+    updateCount();
+  }
+  function updateCount() { G.setText($("#count"), state.players.length); }
+
+  $("#add-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const inp = $("#name-in"), name = inp.value.trim();
+    if (!name) return G.toast("Nhập tên trước đã nhé!", { type: "err" });
+    if (state.players.some((p) => p.name.toLowerCase() === name.toLowerCase())) return G.toast("Tên này đã có rồi!", { type: "err" });
+    if (state.players.length >= 12) return G.toast("Tối đa 12 người thôi nha!", { type: "err" });
+    const p = { name, color: G.PALETTE[state.players.length % G.PALETTE.length] };
+    state.players.push(p); save();
+    list.insertAdjacentHTML("beforeend", rowHTML(p));                 // thêm đúng 1 dòng
+    if (state.players.length <= 8) actors.insertAdjacentHTML("beforeend", avHTML(p, state.players.length - 1));
+    updateCount(); G.sfx("add"); inp.value = ""; inp.focus();
+  });
+
+  list.addEventListener("click", async (e) => {
+    const b = e.target.closest('[data-act="remove"]'); if (!b) return;
+    const li = b.closest("li"), i = [...list.children].indexOf(li);  // chỉ số từ vị trí lúc bấm
+    const p = state.players[i];
+    if (!(await G.confirm({ title: `Loại <span class="y">${esc(p.name)}</span>?`, text: "Người này sẽ rời khỏi nhóm chơi.", ok: "Loại!" }))) return;
+    state.players.splice(i, 1); save();
+    li.remove(); actors.children[i]?.remove();                         // xoá đúng 1 dòng
+    if (state.players.length >= 8 && actors.children.length < 8) actors.insertAdjacentHTML("beforeend", avHTML(state.players[7], 7));
+    updateCount(); G.sfx("remove");
+  });
+
+  $("#topics").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b) return;
+    state.topic = b.textContent; save();
+    [...$("#topics").children].forEach((x) => G.setPressed(x, x === b));  // chỉ đổi aria-pressed
+  });
+
+  /* ================= CHƠI ================= */
+  let hideSecret = null;
+  function startRound() {
+    if (state.players.length < 3) return G.toast("Cần ít nhất 3 người chơi nhé!", { type: "err" });
+    const pairs = TOPICS[state.topic], pair = pairs[Math.random() * pairs.length | 0];
+    state.round = { pair, spy: Math.random() * state.players.length | 0, turn: 0, peeking: false };
+    G.show("s-play"); updatePlay();
+  }
+  function updatePlay() {
+    const r = state.round, p = state.players[r.turn], n = state.players.length;
+    G.setText($("#play-chip"), `Lượt ${r.turn + 1}/${n}`);
+    G.setText($("#turn-name"), p.name);
+    G.meter($("#progress"), 1 - r.turn / n);
+    $("#turn-av").innerHTML = G.avatar({ color: p.color, size: 72, mood: "sly", label: p.name });
+    $("#peek").classList.remove("open");
+    G.setText($("#peek-lb"), "Xem từ");
+    r.peeking = false;
+  }
+  function peekOrNext() {
+    const r = state.round;
+    if (!r.peeking) {
+      const word = r.turn === r.spy ? r.pair[1] : r.pair[0];
+      hideSecret = G.peek($("#secret"), `<span class="mut">Từ của bạn</span><b class="ol secret-word">${esc(word)}</b>`);
+      $("#peek").classList.add("open"); G.sfx("flip"); G.buzz(25);
+      G.setText($("#peek-lb"), r.turn === state.players.length - 1 ? "Xong" : "Đã nhớ");
+      r.peeking = true;
+      return;
+    }
+    hideSecret && hideSecret();                                        // xoá bí mật khỏi DOM ngay
+    if (++r.turn >= state.players.length) { G.show("s-reveal"); resetReveal(); return; }
+    updatePlay();
+  }
+
+  /* ================= TIẾT LỘ ================= */
+  function resetReveal() { $("#reveal-card").classList.remove("open"); $("#reveal-card .back").innerHTML = ""; $('[data-act="do-reveal"]').disabled = false; }
+  async function doReveal(btn) {
+    btn.disabled = true;
+    const spy = state.players[state.round.spy];
+    await G.reveal($("#reveal-card"), {
+      fill: (back) => back.innerHTML = G.avatar({ color: spy.color, hat: "detective", mood: "shock", size: 96, name: spy.name })
+        + `<b>Từ gián điệp: ${esc(state.round.pair[1])}</b>`,
+    });
+    await G.wait(900);
+    showResult();
+  }
+
+  /* ================= KẾT QUẢ ================= */
+  function showResult() {
+    const r = state.round, spy = state.players[r.spy];
+    $("#result-actors").innerHTML = state.players.slice(0, 8).map((p, i) =>
+      G.avatar({ color: p.color, size: i === r.spy ? 70 : 50, hat: i === r.spy ? "detective" : "none", mood: i === r.spy ? "sad" : "grin", name: p.name })).join("");
+    $("#result-text").innerHTML = `<b class="h3 disp">Dân thường thắng!</b><span class="mut">Từ chung: <b>${esc(r.pair[0])}</b> · Gián điệp: <b>${esc(spy.name)}</b></span>`;
+    G.show("s-result");
+    const winners = [...$("#result-actors").children].filter((_, i) => i !== r.spy);
+    G.celebrate({ colors: ["var(--green)", "var(--yellow)", "#fff"], avatars: winners });
+  }
+
+  /* ================= Điều hướng chung ================= */
+  document.addEventListener("click", async (e) => {
+    const b = e.target.closest("[data-act]"); if (!b) return;
+    switch (b.dataset.act) {
+      case "settings": G.openSettings(); break;
+      case "start": startRound(); break;
+      case "peek": peekOrNext(); break;
+      case "do-reveal": doReveal(b); break;
+      case "replay": startRound(); break;                              // giữ nguyên nhóm & thiết lập
+      case "home": G.show("s-setup"); break;
+      case "help": G.sheet({ title: `<span class="ol h2">Cách <span class="y">chơi</span></span>`,
+          body: "<p style='margin:0'>Mỗi người lần lượt xem từ khoá. Một người là gián điệp, nhận từ gần giống. Thảo luận rồi lật bài!</p>",
+          actions: [{ label: "Hiểu rồi", cls: "green", value: true }] }); break;
+      case "quit":
+        if (await G.confirm({ title: "Thoát <span class='y'>ván</span>?", text: "Tiến độ ván này sẽ mất.", ok: "Thoát!" })) {
+          hideSecret && hideSecret(); G.show("s-setup");
+        }
+        break;
+    }
+  });
+
+  buildSetup();
+  G.show("s-setup");
+})();
+</script>
+</body>
+</html>

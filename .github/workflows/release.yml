@@ -1,0 +1,36 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check version tag
+        env:
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          test "${TAG_NAME#v}" = "$(tr -d '[:space:]' < VERSION)"
+
+      - name: Build and validate release
+        run: make release
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          gh release create "$TAG_NAME" \
+            "releases/game-ui-v${TAG_NAME#v}.skill" \
+            --title "game-ui $TAG_NAME" \
+            --generate-notes
