@@ -16,6 +16,20 @@ This skill defines the interface and quality workflow, but does not decide the g
 
 ## Installation
 
+### Agent Skills Marketplace
+
+This repository follows the marketplace layout `skills/game-ui/SKILL.md`. Install it with the Skills CLI:
+
+```bash
+npx skills add maitrithanh/game-ui-skill
+```
+
+Install globally for the current user:
+
+```bash
+npx skills add maitrithanh/game-ui-skill -g -y
+```
+
 ### One-command install
 
 From the root of a project, run:
@@ -64,7 +78,7 @@ unzip -l releases/game-ui.skill
 unzip -p releases/game-ui.skill '*/SKILL.md'
 ```
 
-For web projects, copy the files in `skill/game-ui/assets/` into your project. For native platforms or engines, use the tokens and formulas in `skill/game-ui/references/` instead of copying the entire web kit.
+For web projects, copy the files in `skills/game-ui/assets/` into your project. For native platforms or engines, use the tokens and formulas in `skills/game-ui/references/` instead of copying the entire web kit.
 
 ## Usage workflow
 
@@ -148,7 +162,7 @@ After copying `assets/kit.css` and `assets/kit.js`, initialize the kit with the 
 
 | Path | Purpose |
 | --- | --- |
-| `skill/game-ui/` | Editable source of the skill |
+| `skills/game-ui/` | Marketplace skill source (`SKILL.md`) |
 | `demo/` | Landing page and browser demo for the kit |
 | `releases/game-ui.skill` | Installable ZIP package |
 | `README.md` | English and Vietnamese documentation |
@@ -217,6 +231,18 @@ Hãy dùng skill game-ui để thiết kế màn hình cài đặt cho game củ
 ```
 
 ### Cài đặt nhanh
+
+Repository dùng cấu trúc marketplace `skills/game-ui/SKILL.md`. Cài bằng Skills CLI:
+
+```bash
+npx skills add maitrithanh/game-ui-skill
+```
+
+Cài global cho user hiện tại:
+
+```bash
+npx skills add maitrithanh/game-ui-skill -g -y
+```
 
 Cài nhanh từ thư mục gốc của project:
 
@@ -296,7 +322,7 @@ Mobile dọc dùng `mobile`, mobile ngang dùng `landscape`, desktop dùng `desk
 
 ### Cấu trúc repository
 
-- `skill/game-ui/`: source có thể chỉnh sửa của skill.
+- `skills/game-ui/`: source marketplace có thể chỉnh sửa của skill.
 - `demo/`: landing page và browser demo.
 - `releases/game-ui.skill`: package để cài đặt.
 - `CHANGELOG.md`: lịch sử thay đổi theo version.

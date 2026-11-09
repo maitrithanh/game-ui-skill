@@ -25,5 +25,5 @@ jobs:
           test -f README.md
           test -f LICENSE
           test -f VERSION
-          test -f skill/game-ui/SKILL.md
+          test -f skills/game-ui/SKILL.md
           test -f demo/index.html

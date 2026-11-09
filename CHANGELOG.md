@@ -5,6 +5,14 @@ All notable changes to this project are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and versions follow [Semantic Versioning](https://semver.org/).
 
+## [1.1.5] - 2026-11-09
+
+### Changed
+
+- Restructured the repository to the Agent Skills Marketplace layout: `skills/game-ui/SKILL.md`.
+- Added `npx skills add maitrithanh/game-ui-skill` installation instructions.
+- Updated Makefile, CI, AGENTS.md, and README paths for marketplace discovery.
+
 ## [1.1.4] - 2026-11-09
 
 ### Added

@@ -2,7 +2,7 @@ SHELL := /bin/sh
 
 SKILL_NAME := game-ui
 VERSION := $(shell tr -d '[:space:]' < VERSION)
-SOURCE_DIR := skill/$(SKILL_NAME)
+SOURCE_DIR := skills/$(SKILL_NAME)
 RELEASE_DIR := releases
 RELEASE_FILE := $(RELEASE_DIR)/$(SKILL_NAME).skill
 VERSIONED_RELEASE_FILE := $(RELEASE_DIR)/$(SKILL_NAME)-v$(VERSION).skill
@@ -29,7 +29,7 @@ build-release:
 	@command -v zip >/dev/null 2>&1 || (printf 'zip is required to build the release\n' >&2; exit 1)
 	@mkdir -p $(RELEASE_DIR)
 	@rm -f $(RELEASE_FILE) $(VERSIONED_RELEASE_FILE)
-	@cd skill && zip -qr ../$(VERSIONED_RELEASE_FILE) $(SKILL_NAME)
+	@cd skills && zip -qr ../$(VERSIONED_RELEASE_FILE) $(SKILL_NAME)
 	@cp $(VERSIONED_RELEASE_FILE) $(RELEASE_FILE)
 	@printf 'Built %s\n' '$(VERSIONED_RELEASE_FILE)'
 	@printf 'Updated %s\n' '$(RELEASE_FILE)'
