@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#cfe6f7">
 <title>Game UI · Viền mực, khối dày</title>
+<meta name="description" content="Bộ giao diện game mã nguồn mở: viền mực, nút khối dày, màu tươi. CSS + JS thuần, 6 style, responsive, accessible.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Grandstander:wght@800;900&display=swap" rel="stylesheet">
@@ -19,33 +20,33 @@
   .nav::-webkit-scrollbar{display:none}
   .nav a{flex:none;text-decoration:none;color:var(--ink)}
   .brand{display:flex;align-items:center;gap:9px;margin-right:auto;font-family:var(--f-display);font-weight:900;font-size:1.05rem;white-space:nowrap}
-  .brand-mark{display:grid;place-items:center;width:34px;height:34px;background:var(--yellow);border:var(--bw) solid var(--ink);border-radius:12px;box-shadow:0 3px 0 var(--ink);font-size:.95rem}
+  .brand-mark{color:#1c2238;display:grid;place-items:center;width:34px;height:34px;background:var(--yellow);border:var(--bw) solid var(--outline);border-radius:12px;box-shadow:0 3px 0 var(--outline);font-size:.95rem}
   .nav-links{display:flex;gap:16px;align-items:center}
   .nav-link{font-family:var(--f-display);font-weight:800;font-size:.86rem;color:var(--mut)!important}
   .nav-link:hover{color:var(--ink)!important}
-  .nav .btn{min-height:38px;padding:5px 13px 8px;font-size:.76rem;border-radius:14px}
+  .nav .btn{--btn-deco:none;min-height:38px;padding:5px 13px 8px;font-size:.76rem;border-radius:14px}
   .hero{position:relative;display:grid;grid-template-columns:minmax(0,1.02fr) minmax(320px,.98fr);align-items:center;padding:clamp(38px,7vw,86px) 0 clamp(28px,5vw,60px);gap:clamp(24px,6vw,72px);text-align:left}
   .hero-copy{display:flex;flex-direction:column;align-items:flex-start;gap:18px}
   .eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--mut);font-family:var(--f-display);font-weight:800;font-size:.82rem;letter-spacing:.07em;text-transform:uppercase}
   .eyebrow::before{content:"";width:9px;height:9px;background:var(--green);border:2px solid var(--ink);border-radius:50%;box-shadow:2px 2px 0 var(--ink)}
-  .hero .h1{max-width:8ch;font-size:clamp(3.2rem,8vw,6.6rem);line-height:.91;letter-spacing:-.02em}
+  .hero .h1{max-width:10ch;font-size:clamp(3rem,6.6vw,5.6rem);line-height:.91;letter-spacing:-.02em}
   .hero p{max-width:38ch;margin:0;color:var(--mut);font-size:clamp(1rem,2vw,1.2rem);line-height:1.5}
   .cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-start}
   .hero-visual{position:relative;min-height:330px;display:grid;place-items:center;padding:20px 10px 0}
-  .hero-visual::before{content:"";position:absolute;inset:10% 4% 5%;background:var(--yellow-l);border:var(--outline-width) var(--outline-style) var(--outline);border-radius:38% 44% 34% 48%;transform:rotate(-4deg);box-shadow:8px 8px 0 var(--ink);opacity:.9}
-  .hero-visual .stage{position:relative;width:100%;background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,.15));border:var(--outline-width) var(--outline-style) var(--outline);border-radius:28px;padding:28px 14px 0;box-shadow:0 5px 0 var(--ink);overflow:hidden}
+  .hero-visual::before{content:"";position:absolute;inset:10% 4% 5%;background:color-mix(in srgb,var(--yellow) 38%,transparent);border-radius:38% 44% 34% 48%;transform:rotate(-4deg)}
+  .hero-visual .stage{position:relative;width:100%;background:color-mix(in srgb,var(--card) 82%,transparent);border:var(--outline-width) var(--outline-style) var(--outline);border-radius:var(--r-panel);padding:28px 14px 0;overflow:hidden}
   .hero-visual .actors{min-height:190px;align-items:end}
   .hero-visual .plinth{margin-top:-2px}
-  .hero-note{position:absolute;right:-2px;top:18px;z-index:2;transform:rotate(5deg);background:var(--green);color:#fff;-webkit-text-stroke:.08em var(--ink);paint-order:stroke fill;border:var(--bw) solid var(--ink);border-radius:14px;padding:8px 13px;font-family:var(--f-display);font-weight:900;box-shadow:3px 3px 0 var(--ink)}
+  .hero-note{position:absolute;right:-2px;top:18px;z-index:2;transform:rotate(5deg);background:var(--green);color:#fff;-webkit-text-stroke:.08em #1c2238;paint-order:stroke fill;border:var(--bw) solid var(--outline);border-radius:14px;padding:8px 13px;font-family:var(--f-display);font-weight:900;box-shadow:3px 3px 0 var(--outline)}
   .hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:3px}
   .hero-meta .pill{background:rgba(255,255,255,.6)}
   .style-picker{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;width:min(100%,520px);margin-top:2px}
-  .style-option{min-width:0;min-height:42px;padding:7px 8px;border:var(--outline-width) var(--outline-style) var(--outline);border-radius:12px;background:var(--card);box-shadow:0 3px 0 var(--ink);font-family:var(--f-display);font-weight:800;font-size:.74rem;line-height:1.05;cursor:pointer;text-align:left}
-  .style-option[aria-pressed="true"]{background:var(--yellow);transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
+  .style-option{min-width:0;min-height:42px;padding:7px 8px;border:var(--outline-width) var(--outline-style) var(--outline);border-radius:var(--r-field);background:var(--card);box-shadow:0 3px 0 var(--outline);font-family:var(--f-display);font-weight:800;font-size:.74rem;line-height:1.05;cursor:pointer;text-align:left}
+  .style-option[aria-pressed="true"]{color:#1c2238;background:var(--yellow);transform:translateY(2px);box-shadow:0 1px 0 var(--outline)}
   .style-option small{display:block;color:var(--mut);font:600 .68rem/1.1 var(--f-body);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .style-option[aria-pressed="true"] small{color:var(--ink)}
+  .style-option[aria-pressed="true"] small{color:#1c2238}
   .style-caption{margin:0;max-width:42ch;color:var(--mut);font-size:.88rem}
-  .value-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;overflow:hidden;background:var(--ink);border:var(--bw) solid var(--ink);border-radius:20px;box-shadow:0 4px 0 var(--ink);margin-bottom:20px}
+  .value-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;overflow:hidden;background:var(--ink);border:var(--bw) solid var(--outline);border-radius:20px;box-shadow:0 4px 0 var(--outline);margin-bottom:20px}
   .value-item{min-height:96px;padding:16px;background:rgba(255,255,255,.58);display:flex;flex-direction:column;justify-content:center;gap:2px}
   .value-item strong{font-family:var(--f-display);font-size:1.2rem}
   .value-item span{color:var(--mut);font-size:.88rem}
@@ -56,10 +57,10 @@
   .demo{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
   .demo.col{align-items:stretch}
   details summary{cursor:pointer;font-family:var(--f-display);font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);min-height:32px;display:flex;align-items:center}
-  pre{margin:8px 0 0;padding:12px;border:var(--bw) solid var(--ink);border-radius:14px;background:var(--ink);color:#e8f2f6;overflow:auto;font:600 .8rem/1.5 ui-monospace,Menlo,Consolas,monospace;max-height:320px}
+  pre{margin:8px 0 0;padding:12px;border:var(--bw) solid var(--outline);border-radius:14px;background:#1c2238;color:#e8f2f6;overflow:auto;font:600 .8rem/1.5 ui-monospace,Menlo,Consolas,monospace;max-height:320px}
   .swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:12px}
   .sw{display:flex;flex-direction:column;gap:4px;font-size:.8rem}
-  .sw i{display:block;height:54px;border:var(--bw) solid var(--ink);border-radius:14px;background:var(--c);box-shadow:inset 0 -6px 0 var(--cd,transparent),0 var(--lift) 0 var(--ink)}
+  .sw i{display:block;height:54px;border:var(--bw) solid var(--outline);border-radius:14px;background:var(--c);box-shadow:inset 0 -6px 0 var(--cd,transparent),0 var(--lift) 0 var(--ink)}
   .sw b{font-family:var(--f-display)}
   .icons{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:12px}
   .icons div{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:.78rem}
@@ -75,6 +76,43 @@
   .desk .stories{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;align-items:start}
   .desk .stories .wide{grid-column:1/-1}
   .stories{display:flex;flex-direction:column;gap:14px}
+
+  /* ===== Landing sections ===== */
+  .sec{margin:clamp(36px,6vw,72px) 0 0}
+  .sec-head{display:flex;flex-direction:column;align-items:flex-start;gap:8px;margin-bottom:22px;max-width:60ch}
+  .sec-head p{margin:0;color:var(--mut)}
+  .feat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+  .feat{position:relative;display:flex;flex-direction:column;gap:8px;padding:20px 18px 22px;background:var(--card);border:var(--bw) solid var(--outline);border-radius:var(--r-card);box-shadow:0 5px 0 var(--outline);transition:transform .15s}
+  .feat:hover{transform:translateY(-3px) rotate(-.4deg)}
+  .feat-ic{display:grid;place-items:center;width:46px;height:46px;border:var(--bw) solid var(--outline);border-radius:15px;box-shadow:0 3px 0 var(--outline);background:var(--c,var(--yellow));color:var(--ink)}
+  .feat-ic svg{width:26px;height:26px}
+  .feat h3{margin:6px 0 0;font-family:var(--f-display);font-weight:900;font-size:1.12rem}
+  .feat p{margin:0;color:var(--mut);font-size:.93rem;line-height:1.45}
+  .install{display:grid;gap:14px;padding:18px}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px}
+  .tab{min-height:40px;padding:6px 14px;border:var(--bw) solid var(--outline);border-radius:var(--r-field);background:var(--card);box-shadow:0 3px 0 var(--outline);font-family:var(--f-display);font-weight:800;font-size:.84rem;cursor:pointer;color:var(--ink)}
+  .tab[aria-pressed="true"]{color:#1c2238;background:var(--yellow);transform:translateY(2px);box-shadow:0 1px 0 var(--outline)}
+  .tab:focus-visible{outline:3px solid var(--azure);outline-offset:2px}
+  .cmd{position:relative}
+  .cmd pre{margin:0;padding:16px 92px 16px 16px;white-space:pre-wrap;word-break:break-all;max-height:none}
+  .cmd .copy{position:absolute;right:10px;top:10px;min-height:36px;padding:4px 12px 7px;font-size:.74rem;border-radius:12px}
+  .install small{color:var(--mut)}
+  .steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;padding:0;margin:0;list-style:none}
+  .steps li{position:relative;padding:22px 16px 16px;display:flex;flex-direction:column;gap:4px}
+  .steps .n{font-style:normal;position:absolute;top:-14px;left:14px;display:grid;place-items:center;width:30px;height:30px;background:var(--green);color:#fff;border:var(--bw) solid var(--outline);border-radius:50%;font-family:var(--f-display);font-weight:900;box-shadow:0 2px 0 var(--outline);-webkit-text-stroke:.06em #1c2238;paint-order:stroke fill}
+  .steps b{font-family:var(--f-display);font-size:1rem;margin-top:4px}
+  .steps span{color:var(--mut);font-size:.88rem;line-height:1.4}
+  .final{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;padding:clamp(28px,5vw,52px) 20px;background:var(--yellow-l);box-shadow:0 6px 0 var(--outline)}
+  .final p{margin:0;color:var(--mut);max-width:44ch}
+  .divider{margin:clamp(36px,6vw,72px) 0 18px;display:flex;align-items:center;gap:14px;font-family:var(--f-display);font-weight:900}
+  .divider::after{content:"";flex:1;height:0;border-top:3px dashed color-mix(in srgb,var(--ink) 35%,transparent)}
+  .foot{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;justify-content:space-between;padding:22px 0 10px;border-top:var(--bw) solid var(--outline);margin-top:36px}
+  .foot nav{display:flex;flex-wrap:wrap;gap:6px 18px}
+  .foot a{color:var(--ink);font-family:var(--f-display);font-weight:800;font-size:.88rem}
+  .style-option{color:var(--ink)}
+  .hero-visual .actors .avatar{filter:drop-shadow(0 3px 0 rgba(0,0,0,.12))}
+  @media (max-width:900px){.feat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.steps{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:24px}}
+  @media (max-width:560px){.feat-grid,.steps{grid-template-columns:1fr}.foot{flex-direction:column;align-items:flex-start}}
 </style>
 </head>
 <body>
@@ -83,44 +121,77 @@
   <nav class="nav" aria-label="Mục lục">
     <a class="brand" href="#top" aria-label="Game UI về đầu trang"><span class="brand-mark">✦</span><span>Game UI</span></a>
     <div class="nav-links">
-      <a class="nav-link" href="#colors">Bộ màu</a><a class="nav-link" href="#buttons">Component</a><a class="nav-link" href="#stage">Sân khấu</a>
+      <a class="nav-link" href="#features">Tính năng</a><a class="nav-link" href="#install">Cài đặt</a><a class="nav-link" href="#how">Quy trình</a><a class="nav-link" href="#colors">Component</a>
     </div>
-    <a class="btn green" href="kit.css" download><span>Tải kit</span></a>
+    <a class="btn green" href="https://github.com/maitrithanh/game-ui-skill" target="_blank" rel="noopener"><span>GitHub</span></a>
   </nav>
 
   <!-- ========== LANDING ========== -->
   <header class="hero" id="top">
     <div class="hero-copy">
-      <span class="eyebrow">Open-source game interface kit</span>
+      <span class="eyebrow">Skill giao diện game mã nguồn mở</span>
       <h1 class="ol h1">Giao diện game <span class="y">có cá tính.</span></h1>
       <p>Khung UI tươi sáng, phản hồi rõ ràng và sẵn sàng mở rộng. Dựng trải nghiệm chơi mượt bằng CSS + JS thuần, không phụ thuộc thư viện.</p>
       <div class="cta">
-        <a class="btn big green" href="#buttons" data-key="Enter"><span>Khám phá component</span></a>
-        <a class="btn big azure" href="README.md"><span>Đọc tài liệu</span></a>
+        <a class="btn big green" href="#install" data-key="Enter"><span>Cài đặt ngay</span></a>
+        <a class="btn big azure" href="#colors"><span>Xem component</span></a>
       </div>
-      <div class="hero-meta"><span class="pill green">MIT-ready</span><span class="pill blue">Responsive</span><span class="pill">Không framework</span></div>
+      <div class="hero-meta"><span class="pill green">MIT</span><span class="pill blue">Responsive</span><span class="pill">6 style</span><span class="pill">Không framework</span></div>
       <div class="style-picker" id="style-picker" role="group" aria-label="Chọn style giao diện">
-        <button class="style-option" type="button" data-style="ink-candy" aria-pressed="true">Ink Candy<small>Casual &amp; playful</small></button>
-        <button class="style-option" type="button" data-style="storybook-paper" aria-pressed="false">Storybook Paper<small>Narrative &amp; warm</small></button>
-        <button class="style-option" type="button" data-style="neon-arcade" aria-pressed="false">Neon Arcade<small>Action &amp; rhythm</small></button>
-        <button class="style-option" type="button" data-style="cozy-workshop" aria-pressed="false">Cozy Workshop<small>Craft &amp; collect</small></button>
-        <button class="style-option" type="button" data-style="mystic-night" aria-pressed="false">Mystic Night<small>Mystery &amp; fantasy</small></button>
-        <button class="style-option" type="button" data-style="field-manual" aria-pressed="false">Field Manual<small>Tactics &amp; data</small></button>
+        <button class="style-option" type="button" data-style="ink-candy" aria-pressed="true">Ink Candy<small>Casual · vui nhộn</small></button>
+        <button class="style-option" type="button" data-style="storybook-paper" aria-pressed="false">Storybook Paper<small>Kể chuyện · ấm</small></button>
+        <button class="style-option" type="button" data-style="neon-arcade" aria-pressed="false">Neon Arcade<small>Hành động · nhịp</small></button>
+        <button class="style-option" type="button" data-style="cozy-workshop" aria-pressed="false">Cozy Workshop<small>Chế tạo · sưu tầm</small></button>
+        <button class="style-option" type="button" data-style="mystic-night" aria-pressed="false">Mystic Night<small>Bí ẩn · giả tưởng</small></button>
+        <button class="style-option" type="button" data-style="field-manual" aria-pressed="false">Field Manual<small>Chiến thuật · dữ liệu</small></button>
       </div>
-      <p class="style-caption" id="style-caption">Ink Candy: tactile, bright, rounded and friendly.</p>
+      <p class="style-caption" id="style-caption">Ink Candy: dày dặn, tươi sáng, bo tròn và thân thiện.</p>
     </div>
     <div class="hero-visual" aria-label="Minh họa các nhân vật trong giao diện game">
-      <span class="hero-note">ready to play!</span>
+      <span class="hero-note">sẵn sàng chơi!</span>
       <div class="stage"><div class="actors" id="hero-actors"></div><div class="plinth wide"></div></div>
     </div>
   </header>
 
-  <section class="value-strip" aria-label="Điểm nổi bật">
-    <div class="value-item"><strong>01</strong><span>Token có hệ thống</span></div>
-    <div class="value-item"><strong>02</strong><span>Phản hồi khi tương tác</span></div>
-    <div class="value-item"><strong>03</strong><span>Responsive từ đầu</span></div>
-    <div class="value-item"><strong>04</strong><span>Accessibility tích hợp</span></div>
+  <section class="sec" id="features">
+    <div class="sec-head"><span class="eyebrow">Vì sao chọn Game UI</span><h2 class="ol h2">Mọi thứ cho một giao diện game <span class="y">hoàn chỉnh</span></h2><p>Từ token màu đến âm thanh, tất cả đi cùng một ngôn ngữ thiết kế nhất quán.</p></div>
+    <div class="feat-grid">
+      <article class="feat panel"><span class="feat-ic" style="--c:var(--yellow)" data-icon="star"></span><h3>Token có hệ thống</h3><p>Mỗi màu đi theo cặp <code>--x</code>/<code>--x-d</code>. Đổi game chỉ cần ghi đè token.</p></article>
+      <article class="feat panel"><span class="feat-ic" style="--c:var(--green)" data-icon="play"></span><h3>Phản hồi khi tương tác</h3><p>Nút lún xuống, toast, rung, âm thanh và hiệu ứng ăn mừng sẵn có.</p></article>
+      <article class="feat panel"><span class="feat-ic" style="--c:var(--azure)" data-icon="sound"></span><h3>Responsive từ đầu</h3><p>Mobile dọc, mobile ngang, desktop hoặc tự thích ứng chỉ với một tuỳ chọn.</p></article>
+      <article class="feat panel"><span class="feat-ic" style="--c:var(--blue)" data-icon="check"></span><h3>Accessibility tích hợp</h3><p>Tương phản, vùng chạm 40px, focus rõ, giảm chuyển động, không chỉ dựa vào màu.</p></article>
+      <article class="feat panel"><span class="feat-ic" style="--c:var(--red)" data-icon="eye"></span><h3>6 style profile</h3><p>Ink Candy, Storybook, Neon, Cozy, Mystic, Field Manual. Đổi bằng <code>GameUI.style()</code>.</p></article>
+      <article class="feat panel"><span class="feat-ic" style="--c:var(--teal)" data-icon="gear"></span><h3>Mọi công nghệ</h3><p>HTML, React, Vue, Svelte, Angular, Flutter, SwiftUI, Unity, Godot và hơn nữa.</p></article>
+    </div>
   </section>
+
+  <section class="sec" id="install">
+    <div class="sec-head"><span class="eyebrow">Bắt đầu trong 10 giây</span><h2 class="ol h2">Cài cho agent <span class="y">của bạn</span></h2><p>Chọn agent, copy lệnh, rồi mở phiên mới và gọi <code>/game-ui</code>.</p></div>
+    <div class="panel install">
+      <div class="tabs" id="install-tabs" role="group" aria-label="Chọn agent">
+        <button class="tab" type="button" aria-pressed="true" data-cmd="npx skills add maitrithanh/game-ui-skill">Skills CLI</button>
+        <button class="tab" type="button" aria-pressed="false" data-cmd="curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh | sh -s -- --agent claude">Claude Code</button>
+        <button class="tab" type="button" aria-pressed="false" data-cmd="curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh | sh -s -- --agent copilot">Copilot</button>
+        <button class="tab" type="button" aria-pressed="false" data-cmd="curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh | sh -s -- --agent codex">Codex</button>
+        <button class="tab" type="button" aria-pressed="false" data-cmd="curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh | sh -s -- --agent gemini">Gemini CLI</button>
+        <button class="tab" type="button" aria-pressed="false" data-cmd="curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh | sh -s -- --agent agents">Agents</button>
+      </div>
+      <div class="cmd"><pre id="install-cmd"><code></code></pre><button class="btn sm green copy" id="install-copy" type="button"><span>Copy</span></button></div>
+      <small>Cài toàn cục: thêm <code>-g -y</code> cho Skills CLI. Thư mục riêng: <code>--dir PATH</code>.</small>
+    </div>
+  </section>
+
+  <section class="sec" id="how">
+    <div class="sec-head"><span class="eyebrow">Quy trình</span><h2 class="ol h2">Hỏi trước, <span class="y">dựng sau</span></h2><p>Skill không tự đoán game của bạn. Nó hỏi, ghi lại thành phiếu thiết kế rồi mới viết UI.</p></div>
+    <ol class="steps">
+      <li class="panel"><i class="n">1</i><b>Mô tả game</b><span>Luật chơi, số người chơi và các màn hình cần có.</span></li>
+      <li class="panel"><i class="n">2</i><b>Chọn công nghệ</b><span>Nền tảng, kích thước, màu sắc, âm thanh và style.</span></li>
+      <li class="panel"><i class="n">3</i><b>Phiếu thiết kế</b><span>Mọi lựa chọn được ghi lại, là nguồn sự thật cho UI.</span></li>
+      <li class="panel"><i class="n">4</i><b>Dựng &amp; kiểm tra</b><span>Dùng kit, rồi kiểm tra palette, a11y, layout và hình ảnh.</span></li>
+    </ol>
+  </section>
+
+  <div class="divider"><span class="ol h2">Thư viện <span class="y">component</span></span></div>
 
   <!-- ========== STORYBOOK ========== -->
   <div class="stories">
@@ -255,7 +326,16 @@
     </section>
   </div>
 
-  <footer class="center mut"><span>Dựng từ skill <b>game-ui</b> · <code>kit.css</code> + <code>kit.js</code></span></footer>
+  <section class="panel final sec" aria-label="Bắt đầu">
+    <h2 class="ol h1">Sẵn sàng <span class="y">chơi</span>?</h2>
+    <p>Cài skill, mô tả game của bạn và để agent dựng giao diện có cá tính.</p>
+    <div class="cta"><a class="btn big green" href="#install"><span>Cài đặt</span></a><a class="btn big azure" href="https://github.com/maitrithanh/game-ui-skill" target="_blank" rel="noopener"><span>Xem trên GitHub</span></a></div>
+  </section>
+
+  <footer class="foot">
+    <span class="mut">Game UI · MIT · dựng bằng <code>kit.css</code> + <code>kit.js</code></span>
+    <nav aria-label="Liên kết"><a href="https://github.com/maitrithanh/game-ui-skill" target="_blank" rel="noopener">GitHub</a><a href="https://github.com/maitrithanh/game-ui-skill/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Changelog</a><a href="https://github.com/maitrithanh/game-ui-skill/blob/main/LICENSE" target="_blank" rel="noopener">Giấy phép</a><a href="#top">Lên đầu ↑</a></nav>
+  </footer>
 </main>
 
 <script src="kit.js"></script>
@@ -282,12 +362,12 @@
 
   // Hero: the same characters are re-rendered with each selected style profile.
   const STYLE_CAPTIONS = {
-    "ink-candy": "Ink Candy: tactile, bright, rounded and friendly.",
-    "storybook-paper": "Storybook Paper: illustrated, warm and chapter-like.",
-    "neon-arcade": "Neon Arcade: high-contrast, energetic and score-driven.",
-    "cozy-workshop": "Cozy Workshop: handmade, warm and quietly tactile.",
-    "mystic-night": "Mystic Night: atmospheric, luminous and mysterious.",
-    "field-manual": "Field Manual: structured, practical and information-first.",
+    "ink-candy": "Ink Candy: dày dặn, tươi sáng, bo tròn và thân thiện.",
+    "storybook-paper": "Storybook Paper: như trang truyện tranh minh hoạ, ấm áp.",
+    "neon-arcade": "Neon Arcade: tương phản cao, bùng nổ, chạy theo điểm số.",
+    "cozy-workshop": "Cozy Workshop: thủ công, ấm cúng, chạm là thấy.",
+    "mystic-night": "Mystic Night: huyền ảo, phát sáng và bí ẩn.",
+    "field-manual": "Field Manual: gọn gàng, thực dụng, ưu tiên thông tin.",
   };
   const renderHeroActors = () => { $("#hero-actors").innerHTML = G.PALETTE.slice(0, 5).map((c, i) =>
     G.avatar({ color: c, size: 64, cls: "bounce", hat: ["crown", "party", "wizard", "cap", "bow"][i], mood: "grin", style: `--dl:-${i * 0.4}s` })).join(""); };
@@ -300,8 +380,18 @@
     renderHeroActors();
   });
 
+  // Cài đặt: chọn agent, copy lệnh
+  const cmdEl = $("#install-cmd code"), tabs = $("#install-tabs");
+  const showCmd = (b) => { cmdEl.textContent = b.dataset.cmd; $$(".tab", tabs).forEach((t) => G.setPressed(t, t === b)); };
+  showCmd($(".tab", tabs));
+  tabs.addEventListener("click", (e) => { const b = e.target.closest(".tab"); if (b) showCmd(b); });
+  $("#install-copy").addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(cmdEl.textContent); G.toast("Đã copy lệnh!", { type: "ok" }); }
+    catch { G.toast("Không copy được, hãy chọn và copy thủ công.", { type: "err" }); }
+  });
+
   // Sân khấu demo
-  const MOODS = ["happy", "grin", "calm", "sad", "shock", "angry", "sly", "sleep"];
+  const MOODS = ["happy", "grin", "cheer", "wink", "think", "calm", "sad", "cry", "shock", "angry", "sly", "sleep"];
   const HATS = ["none", "crown", "cap", "party", "detective", "wizard", "bow", "leaf", "mask"];
   $("#demo-actors").innerHTML = ["An", "Bình", "Chi", "Dũng"].map((n, i) =>
     G.avatar({ color: G.PALETTE[i], name: n, size: 72, cls: "bounce", mood: MOODS[i], hat: HATS[i + 1], style: `--dl:-${i * 0.5}s` })).join("");

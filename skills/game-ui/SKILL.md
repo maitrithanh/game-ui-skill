@@ -32,7 +32,7 @@ Skip anything the user has already answered clearly in their request or document
 **Ask more when the answers above are not enough to build:**
 
 - Is there a stage scene (sky + platform for characters)? What is the platform made of: grass, ice, sand, wood, a card table…?
-- Are there characters? What do they represent (players, roles, AI opponents)?
+- Are there characters? What do they represent (players, roles, AI opponents)? **Never create characters without asking first.** Ask whether to use none, the kit's default avatars, a custom-designed set, or the user's own assets, then follow `references/characters.md`.
 - UI language: Vietnamese, English, or multiple languages?
 - Are any screens or features required (leaderboard, online play, tutorial…)?
 
@@ -45,7 +45,7 @@ Skip anything the user has already answered clearly in their request or document
   Game: <user description>
   Technology: <…>       Platform: <…>        Preferred size: <…>
   Colors: <default | color codes | theme>  Sound: <…>
-  Scene/platform: <…>   Characters: <…>     Language: <…> */
+  Scene/platform: <…>   Characters: <none | kit default | custom set | user assets>     Language: <…> */
 ```
 
 All later changes must follow this brief. If the user changes their mind, update the brief first, then change the code.
@@ -94,6 +94,7 @@ Size mapping: portrait mobile → `"mobile"`, landscape mobile → `"landscape"`
 - **Press sinks:** on press, move down exactly 3 (the hard-shadow height) and reduce the bottom lip.
 - **Shape language follows the theme:** use rounded forms, radii, typography, texture, and depth that support the game’s world. Do not force identical radii, fonts, heading treatments, or shadows on unrelated games.
 - **Typography follows the mood:** choose a readable display/body pairing that supports the selected language and platform. Grandstander/Baloo 2 are the default kit pairing, not a mandatory choice when a better licensed pairing fits the theme.
+- **Characters are opt-in:** ask before creating any (see `references/characters.md`). When approved, design them as distinct silhouettes with complete faces and an expression for every game state.
 - **Characters follow the world:** when characters exist, design their silhouette, material, face, palette, accessories, and expression from their role and setting. The default round avatar is a fallback, not a mandatory character shape.
 - **Stage follows the story:** when a stage is selected, design its environment from the theme (for example a workshop, night sky, underwater scene, library, market, or abstract board). A sky, cloud, and layered grass platform are only the default example; a screen may intentionally use `.stage.flat` or a custom scene.
 
@@ -278,6 +279,7 @@ Details: `references/assets-quality.md`. Applies to every generated visual (char
 | `references/code-standards.md` | Standards for clean, reusable code, layers, and technology-specific directory structure |
 | `references/palettes.md` | Color rules, 6 available palettes, and color-tool usage |
 | `references/styles.md` | Selectable style profiles, selection protocol, and profile review rules |
+| `references/characters.md` | Ask-first rule for characters, design rules, expression set, and review steps |
 | `references/assets-quality.md` | Visual quality standards, render-review-revise workflow, and export sizes |
 | `scripts/find_existing.py` | Find existing functions/classes (kit and project) before writing new ones |
 | `scripts/palette.py` | Generate `-d`/`-l` pairs and check color contrast and vividness |
@@ -331,7 +333,7 @@ Classes attached to `<html>` by `init`: `.desk` (desktop or landscape), `.land` 
 | `reveal(flipEl, {fill, suspense})` | Suspense → flip → result; `fill(backEl)` fills the back |
 | `celebrate({colors, avatars})`, `confetti(colors)` | Celebration |
 | `burst(text, x, y)` | Pop-up text (combo, +score) |
-| `avatar({color, hat, mood, name, size, cls, style, label})` | Character SVG string. `mood`: `happy grin calm sad shock angry sly sleep`. `hat`: `none crown cap party detective wizard bow leaf mask` |
+| `avatar({color, hat, mood, name, size, cls, style, label})` | Character SVG string. `mood`: `happy grin cheer wink think calm sad cry shock angry sly sleep`. `hat`: `none crown cap party detective wizard bow leaf mask` |
 | `icon(name, {white})` | Two-layer icon: `back home gear close plus minus trash eye replay check info play sound mute star` |
 | `meter(el, ratio)` | 0–1 meter that changes color by threshold |
 | `setText`, `setAttr`, `setPressed` | Write to the DOM only when changed |
@@ -357,3 +359,4 @@ Classes attached to `<html>` by `init`: `.desk` (desktop or landscape), `.land` 
 16. **Smoothness:** animations use only `transform`/`opacity`, loading does not shift layout, no double taps, and low-end testing is complete.
 17. **Visuals:** `render_check.py` ran without errors **and the image was opened and inspected visually**; visuals fit the frame, include all variants, and share one line family.
 18. **Profile review:** the profile checklist in `references/styles.md` passes; no accidental default background, palette, character, or typography remains.
+19. **Characters:** the user was asked before any character was created; approved characters have distinct silhouettes, complete faces, an expression for every game state, and passed the review in `references/characters.md`.

@@ -84,6 +84,22 @@
     "mystic-night": { bg: "#18213b", card: "#27304f", ink: "#11182f" },
     "field-manual": { bg: "#e7e8e2", card: "#f8f8f1", ink: "#303735" },
   };
+  // Mỗi profile đi cùng một cặp font (đều có tiếng Việt). Tải từ Google Fonts; tắt bằng init({ fonts: false }).
+  const FONT_FAMILIES = {
+    "ink-candy": "Baloo+2:wght@600;700;800&family=Grandstander:wght@800;900",
+    "storybook-paper": "Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Lora:wght@500;600;700",
+    "neon-arcade": "Chakra+Petch:ital,wght@0,600;0,700;1,600;1,700&family=Exo+2:wght@500;600;700",
+    "cozy-workshop": "Itim&family=Nunito:wght@600;700;800",
+    "mystic-night": "Cormorant+Garamond:wght@600;700&family=EB+Garamond:wght@500;600;700",
+    "field-manual": "Barlow+Condensed:wght@700;800&family=Barlow:wght@500;600;700",
+  };
+  function loadFonts(profile) {
+    if (features.fonts === false) return;
+    const href = `https://fonts.googleapis.com/css2?family=${FONT_FAMILIES[profile]}&display=swap`;
+    if ([...document.querySelectorAll('link[rel="stylesheet"]')].some((l) => l.href === href)) return;
+    const link = document.createElement("link");
+    link.rel = "stylesheet"; link.href = href; document.head.append(link);
+  }
   const AVATAR_SHAPES = {
     "ink-candy": `<circle cx="40" cy="58" r="29" fill="var(--avatar-color)" stroke="var(--ink)" stroke-width="3.2"/>`,
     "storybook-paper": `<path d="M17 43Q19 27 40 27t23 16v28q-8 15-23 15T17 71Z" fill="var(--avatar-color)" stroke="var(--ink)" stroke-width="3.2"/>`,
@@ -112,18 +128,26 @@
     angry: { mouth: `<path d="M34 68q6-4 12 0" fill="none" stroke="var(--ink)" stroke-width="2.6" stroke-linecap="round"/>`, brow: "angry" },
     sly: { mouth: `<path d="M34 66q8 3 12-3" fill="none" stroke="var(--ink)" stroke-width="2.6" stroke-linecap="round"/>`, look: 2 },
     sleep: { mouth: `<circle cx="40" cy="67" r="2.5" fill="var(--ink)"/>`, closed: true },
+    cheer: { mouth: `<path d="M32 63q8 12 16 0Z" fill="#7a2f3b" stroke="var(--ink)" stroke-width="2.4" stroke-linejoin="round"/>`, joy: true },
+    wink: { mouth: `<path d="M33 65q7 7 14 0" fill="none" stroke="var(--ink)" stroke-width="2.6" stroke-linecap="round"/>`, wink: true },
+    think: { mouth: `<path d="M37 68h9" stroke="var(--ink)" stroke-width="2.6" stroke-linecap="round"/>`, look: 2, brow: "think" },
+    cry: { mouth: `<path d="M34 70q6-6 12 0" fill="none" stroke="var(--ink)" stroke-width="2.6" stroke-linecap="round"/>`, brow: "sad",
+      extra: `<path d="M24 58q-4 6 0 9q4-3 0-9Z M56 58q-4 6 0 9q4-3 0-9Z" fill="var(--azure)" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round"/>` },
   };
   function avatar({ color = "var(--yellow)", hat = "none", mood = "happy", name = "", size = 64, cls = "", style = "", label } = {}) {
     const m = MOODS[mood] || MOODS.happy;
     const ry = m.big ? 6.4 : 5.6, rx = m.big ? 5.4 : 4.8, dx = m.look || 0.6;
     const profile = document.documentElement.dataset.style || features.style;
     const body = (AVATAR_SHAPES[profile] || AVATAR_SHAPES["ink-candy"]).replace("var(--avatar-color)", esc(color));
-    const eye = (x) => m.closed
+    const eye = (x) => m.joy
+      ? `<path d="M${x - 4} 55q4-6 8 0" fill="none" stroke="var(--ink)" stroke-width="2.8" stroke-linecap="round"/>`
+      : m.closed || (m.wink && x === 31)
       ? `<path d="M${x - 4} 53q4 3 8 0" fill="none" stroke="var(--ink)" stroke-width="2.6" stroke-linecap="round"/>`
       : `<ellipse cx="${x}" cy="52" rx="${rx}" ry="${ry}" fill="#fff" stroke="var(--ink)" stroke-width="2.2"/><circle cx="${x + dx}" cy="53.4" r="2.6" fill="var(--ink)"/><circle cx="${x + dx - 1}" cy="52.2" r=".9" fill="#fff"/>`;
     const brow = m.brow === "angry"
       ? `<path d="M26 42l8 4M54 42l-8 4" stroke="var(--ink)" stroke-width="2.8" stroke-linecap="round"/>`
-      : m.brow === "sad" ? `<path d="M26 45l8-3M54 45l-8-3" stroke="var(--ink)" stroke-width="2.8" stroke-linecap="round"/>` : "";
+      : m.brow === "sad" ? `<path d="M26 45l8-3M54 45l-8-3" stroke="var(--ink)" stroke-width="2.8" stroke-linecap="round"/>`
+      : m.brow === "think" ? `<path d="M26 44h8M46 41l8 3" stroke="var(--ink)" stroke-width="2.8" stroke-linecap="round"/>` : "";
     const a11y = label ?? name;
     return resolveVars(`<span class="avatar avatar-${esc(profile)} ${esc(cls)}" style="--s:${+size}px;${esc(style)}">`
       + `<svg viewBox="0 -6 80 104" ${a11y ? `role="img" aria-label="${esc(a11y)}"` : 'aria-hidden="true"'}>`
@@ -132,7 +156,7 @@
       + `<circle cx="40" cy="58" r="29" fill="none" stroke="rgba(0,0,0,.10)" stroke-width="6" stroke-dasharray="0 52 60 200" transform="rotate(10 40 58)"/>`
       + `<path d="M24 40q9-10 22-8" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="4.5" stroke-linecap="round"/>`
       + `<ellipse cx="26" cy="63" rx="5" ry="3.2" fill="#ff8f9c" opacity=".7"/><ellipse cx="54" cy="63" rx="5" ry="3.2" fill="#ff8f9c" opacity=".7"/>`
-      + brow + eye(31) + eye(49) + m.mouth
+      + brow + eye(31) + eye(49) + m.mouth + (m.extra || "")
       + (HATS[hat] ?? "")
       + `</svg>${name ? `<span class="nm">${esc(name)}</span>` : ""}</span>`);
   }
@@ -378,6 +402,7 @@
     const profile = String(name).toLowerCase().replace(/\s+/g, "-");
     const selected = STYLE_PROFILES[profile] ? profile : "ink-candy";
     features.style = selected;
+    loadFonts(selected);
     document.documentElement.dataset.style = selected;
     cssCache = null;
     return selected;
@@ -397,9 +422,9 @@
   /* ---------- Khởi tạo ---------- */
   // Mọi tuỳ chọn ở đây lấy từ CÂU TRẢ LỜI của người dùng (xem SKILL.md Bước 0), không tự đoán.
   let started = false;
-  function init({ id = "game", clouds = 4, sound = true, haptics = sound, layout = "auto", style: visualStyle = "ink-candy", sky: useSky = true, colors } = {}) {
+  function init({ id = "game", clouds = 4, sound = true, haptics = sound, layout = "auto", style: visualStyle = "ink-candy", fonts = true, sky: useSky = true, colors } = {}) {
     NS = id;
-    Object.assign(features, { sound: !!sound, haptics: !!haptics, layout });
+    Object.assign(features, { sound: !!sound, haptics: !!haptics, layout, fonts });
     style(visualStyle);
     colors && theme(colors);
     // Gọi lại an toàn (React StrictMode, hot reload): chỉ cập nhật tuỳ chọn, không gắn trùng listener.

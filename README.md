@@ -6,7 +6,7 @@
 
 An open-source agent skill for designing game UI on web, mobile, desktop, and game engines.
 
-[![Version](https://img.shields.io/badge/version-1.3.1-4caf50?style=for-the-badge)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.3.2-4caf50?style=for-the-badge)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/license-MIT-f4c542?style=for-the-badge)](LICENSE)
 [![Agent Skills](https://img.shields.io/badge/agent-skill-3b82f6?style=for-the-badge)](https://github.com/maitrithanh/game-ui-skill)
 [![CI](https://img.shields.io/github/actions/workflow/status/maitrithanh/game-ui-skill/ci.yml?branch=main&style=for-the-badge&label=CI)](https://github.com/maitrithanh/game-ui-skill/actions)
@@ -51,6 +51,7 @@ It does **not** decide the game, rules, technology, colors, or sound. Before bui
 | 📱 **Native & engines** | Token + formula guides for React Native, Flutter, SwiftUI, Compose, Unity, Godot |
 | 📐 **Adaptive layouts** | Portrait mobile, landscape mobile, desktop, or automatic |
 | 🎨 **6 style profiles** | Casual, storybook, arcade, cozy, mystical, tactical, with theme-driven art direction |
+| 🧑‍🎤 **Characters, opt-in** | The agent asks before creating any; custom sets follow design rules with 12 expressions mapped to game states |
 | ♿ **Accessible** | Semantic colors, contrast checks, hit areas, focus states, reduced motion |
 | 🛠️ **Validation tools** | Palette checks, SVG rendering, palette previews, existing-code finder |
 
@@ -192,7 +193,7 @@ Select one with `GameUI.init({ style: "..." })` or `GameUI.style("...")`. Full r
   GameUI.init({
     id: "my-game",
     layout: "mobile",     // mobile | landscape | desktop | auto
-    style: "ink-candy",   // see Style profiles
+    style: "ink-candy",   // see Style profiles (loads that style's font pair)
     sound: true,
     haptics: true,
     sky: true
