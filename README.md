@@ -1,71 +1,106 @@
-# Game UI Skill
+<div align="center">
 
-An open-source game UI skill for web, mobile, desktop, and game-engine products. It creates interfaces with **ink outlines**, **thick block buttons**, bright colors, responsive motion, and standards for accessibility, performance, code, and visual assets.
+# 🎮 Game UI Skill
 
-This skill defines the interface and quality workflow, but does not decide the game, rules, technology, colors, or sound on its own. Before building the UI, it asks the user to provide those choices.
+**Ink outlines · thick block buttons · bright colors**
 
-## Features
+An open-source agent skill for designing game UI on web, mobile, desktop, and game engines.
 
-- Supports HTML/JS, PWA, Electron, Tauri, Capacitor, React, Vue, Svelte, Angular, Next/Nuxt/SvelteKit.
-- Formulas for React Native, Flutter, SwiftUI, Compose, Unity, Godot, and other technologies.
-- Ready-to-use web kit: tokens, components, responsive layouts, modals, toasts, sound, haptics, storage, and game effects.
-- Layouts for portrait mobile, landscape mobile, desktop, and automatic adaptation.
-- Semantic color rules, contrast, hit areas, focus, reduced motion, and user-data protection.
-- Tools for palette checks, SVG rendering, palette previews, and finding existing project code.
-- Theme-driven art direction: the agent proposes visual directions and adapts backgrounds, palettes, materials, typography, and character silhouettes to the game.
-- Six selectable style profiles with detailed rules for casual, storybook, arcade, cozy, mystical, and tactical games.
+[![Version](https://img.shields.io/badge/version-1.3.1-4caf50?style=for-the-badge)](CHANGELOG.md)
+[![License: MIT](https://img.shields.io/badge/license-MIT-f4c542?style=for-the-badge)](LICENSE)
+[![Agent Skills](https://img.shields.io/badge/agent-skill-3b82f6?style=for-the-badge)](https://github.com/maitrithanh/game-ui-skill)
+[![CI](https://img.shields.io/github/actions/workflow/status/maitrithanh/game-ui-skill/ci.yml?branch=main&style=for-the-badge&label=CI)](https://github.com/maitrithanh/game-ui-skill/actions)
 
-## Installation
+[English](#english) · [Tiếng Việt](#tiếng-việt)
 
-### Agent Skills Marketplace
+</div>
 
-This repository follows the marketplace layout `skills/game-ui/SKILL.md`. Install it with the Skills CLI:
+---
+
+## English
+
+### Table of contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Quick start](#quick-start)
+- [Installation](#installation)
+- [Activating the skill](#activating-the-skill)
+- [Workflow](#workflow)
+- [Style profiles](#style-profiles)
+- [Web kit](#web-kit)
+- [Validation tools](#validation-tools)
+- [Design principles](#design-principles)
+- [Repository layout](#repository-layout)
+- [Releasing](#releasing)
+- [Contributing](#contributing)
+- [License](#license)
+
+### Overview
+
+`game-ui` defines the **interface identity and quality workflow** for game UI: ink-outlined objects, thick tactile buttons, bright semantic colors, responsive motion, and standards for accessibility, performance, code, and visual assets.
+
+It does **not** decide the game, rules, technology, colors, or sound. Before building, the agent asks you for those choices and records them in a *Design brief*.
+
+### Features
+
+| | |
+| --- | --- |
+| 🧱 **Ready web kit** | Tokens, components, responsive layouts, modals, toasts, sound, haptics, storage, and game effects |
+| 🧩 **Any technology** | HTML/JS, PWA, Electron, Tauri, Capacitor, React, Vue, Svelte, Angular, Next/Nuxt/SvelteKit |
+| 📱 **Native & engines** | Token + formula guides for React Native, Flutter, SwiftUI, Compose, Unity, Godot |
+| 📐 **Adaptive layouts** | Portrait mobile, landscape mobile, desktop, or automatic |
+| 🎨 **6 style profiles** | Casual, storybook, arcade, cozy, mystical, tactical, with theme-driven art direction |
+| ♿ **Accessible** | Semantic colors, contrast checks, hit areas, focus states, reduced motion |
+| 🛠️ **Validation tools** | Palette checks, SVG rendering, palette previews, existing-code finder |
+
+### Quick start
 
 ```bash
+# 1. Install
 npx skills add maitrithanh/game-ui-skill
+
+# 2. Start a new agent session and ask:
+#    "Use the game-ui skill to design the settings screen for my game."
 ```
 
-Install globally for the current user:
+### Installation
+
+<details open>
+<summary><b>Skills CLI (recommended)</b></summary>
 
 ```bash
-npx skills add maitrithanh/game-ui-skill -g -y
+npx skills add maitrithanh/game-ui-skill          # project
+npx skills add maitrithanh/game-ui-skill -g -y    # global
+npx skills update                                 # update after a release
 ```
 
-Update all installed skills after a new release:
+Start a new agent session after updating so the old copy is not kept in context.
+
+</details>
+
+<details open>
+<summary><b>One-command installer, per agent</b></summary>
+
+Run from a project root. Without `--agent`, it installs into `.github/skills/game-ui/`.
+
+| Agent | Command | Installs to |
+| --- | --- | --- |
+| 🟣 **Claude Code** | `curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh \| sh -s -- --agent claude` | `~/.claude/skills` |
+| 🐙 **GitHub Copilot** | `curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh \| sh -s -- --agent copilot` | `~/.copilot/skills` |
+| 🟢 **OpenAI Codex** | `curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh \| sh -s -- --agent codex` | `~/.codex/skills` |
+| 🔵 **Gemini CLI** | `curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh \| sh -s -- --agent gemini` | `~/.gemini/skills` |
+| ⚪ **Generic (`.agents`)** | `curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh \| sh -s -- --agent agents` | `~/.agents/skills` |
+| 📁 **Custom folder** | `curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh \| sh -s -- --dir PATH` | `PATH` |
+
+Copy-paste blocks:
 
 ```bash
-npx skills update
-```
-
-Start a new agent session after updating so it does not keep an older skill copy in its current context.
-
-### One-command install
-
-From the root of a project, run:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh | sh
-```
-
-This downloads the latest release and installs it into `.github/skills/game-ui/`.
-
-Install for a specific agent instead:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh \
-  | sh -s -- --agent copilot
-```
-
-Supported targets are `copilot` (`~/.copilot/skills`), `claude` (`~/.claude/skills`), `codex` (`~/.codex/skills`), `gemini` (`~/.gemini/skills`), and `agents` (`~/.agents/skills`). Use `--dir PATH` for a custom agent directory.
-
-Examples:
-
-```bash
-# GitHub Copilot
-curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh | sh -s -- --agent copilot
-
 # Claude Code
 curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh | sh -s -- --agent claude
+
+# GitHub Copilot
+curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh | sh -s -- --agent copilot
 
 # OpenAI Codex
 curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh | sh -s -- --agent codex
@@ -74,71 +109,90 @@ curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/inst
 curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh | sh -s -- --agent gemini
 ```
 
-### Use in a workspace that supports skill packages
+</details>
 
-Download `releases/game-ui.skill` from this repository, then place the downloaded `game-ui.skill` in the workspace's skills directory, or install it through the skill-package mechanism of your tool. The archive contains `game-ui/`, with `SKILL.md` as its entry point.
+<details>
+<summary><b>Install from source with Make (per agent)</b></summary>
 
-### Open and read manually
+```bash
+make install-agent                                # .agents/skills
+make install-agent AGENT_DIR=.claude/skills       # Claude Code (project)
+make install-agent AGENT_DIR=.github/skills       # GitHub Copilot (project)
+make install-agent AGENT_DIR=.codex/skills        # OpenAI Codex (project)
+make install-agent AGENT_DIR=.gemini/skills       # Gemini CLI (project)
+```
 
-The `.skill` file is a ZIP archive. Inspect its contents with:
+</details>
+
+<details>
+<summary><b>Skill package (.skill)</b></summary>
+
+Download `releases/game-ui.skill` and place it in your workspace's skills directory, or install it with your tool's skill-package mechanism. The archive contains `game-ui/` with `SKILL.md` as the entry point.
+
+It is a ZIP file, so you can inspect it:
 
 ```bash
 unzip -l releases/game-ui.skill
 unzip -p releases/game-ui.skill '*/SKILL.md'
 ```
 
-For web projects, copy the files in `skills/game-ui/assets/` into your project. For native platforms or engines, use the tokens and formulas in `skills/game-ui/references/` instead of copying the entire web kit.
+</details>
 
-## Usage workflow
+For web projects without an agent, copy `skills/game-ui/assets/` into your project. For native platforms or engines, use `skills/game-ui/references/` (tokens and formulas) instead of the web kit.
 
-1. Describe the game, rules, number of players, and required screens.
-2. Choose the technology, platform, preferred size, colors, and sound.
-3. Add missing choices such as the stage, characters, and language.
-4. Record the choices in a “Design brief” before writing the UI.
-5. Use the kit or formulas that match the selected technology.
-6. Check the palette, accessibility, responsive layout, performance, and visuals before delivery.
+### Activating the skill
 
-The skill does not choose the game name, rules, screens, features, or technology for the user.
-
-## Activating the skill
-
-Installing a skill makes it available to the agent; it does not force the skill into every conversation. The agent loads it when the request matches the `description` in `SKILL.md`.
-
-To activate it explicitly, use the skill command if your agent exposes slash commands:
+Installing makes the skill *available*; the agent loads it when your request matches the `description` in `SKILL.md`. To force it:
 
 ```text
 /game-ui
 ```
 
-You can also mention it in the request:
+or mention it: *"Use the game-ui skill to design the settings screen."*
 
-```text
-Use the game-ui skill to design the settings screen for my game.
+For per-project use, install under `.github/skills/game-ui/` (Copilot), `.claude/skills/game-ui/` (Claude Code), or your agent's documented directory. The folder name and the frontmatter `name` must both be `game-ui`. The included `AGENTS.md` tells agents that support it when to use this skill.
+
+### Workflow
+
+```mermaid
+flowchart LR
+  A[Describe game] --> B[Pick tech, platform,<br>size, colors, sound]
+  B --> C[Pick style profile]
+  C --> D[Write Design brief]
+  D --> E[Build with kit<br>or formulas]
+  E --> F[Check palette, a11y,<br>layout, performance, visuals]
 ```
 
-For project-specific use, install it under `.github/skills/game-ui/` for GitHub Copilot, `.claude/skills/game-ui/` for Claude Code, or the agent's documented skills directory. The folder name and the frontmatter `name` must both be `game-ui`.
+1. Describe the game, rules, number of players, and required screens.
+2. Choose technology, platform, preferred size, colors, and sound.
+3. Choose a style profile (or accept one of two recommended directions).
+4. The agent records everything as a **Design brief** before writing UI.
+5. Build with the kit or the formulas matching your technology.
+6. Verify palette, accessibility, responsive layout, performance, and visuals.
 
-This repository also includes `AGENTS.md` with project-level instructions. Where the agent supports `AGENTS.md`, those instructions are loaded on each run and tell the agent when to use `game-ui`.
+### Style profiles
 
-Install the local source into an agent directory with Make:
+Select one with `GameUI.init({ style: "..." })` or `GameUI.style("...")`. Full rules live in [`references/styles.md`](skills/game-ui/references/styles.md).
 
-```bash
-make install-agent
-make install-agent AGENT_DIR=.claude/skills
-make install-agent AGENT_DIR=.github/skills
-```
+| Profile | Best for |
+| --- | --- |
+| **Ink Candy** *(default)* | Casual, party, trivia, family, children's games |
+| **Storybook Paper** | Narrative, word, educational, chapter-based games |
+| **Neon Arcade** | Action, rhythm, score-chasing, cyber, sports |
+| **Cozy Workshop** | Building, cooking, farming, crafting, collecting |
+| **Mystic Night** | Mystery, fantasy, exploration, investigation |
+| **Field Manual** | Tactics, management, simulation, information-dense puzzles |
 
-## Web initialization example
-
-After copying `assets/kit.css` and `assets/kit.js`, initialize the kit with the choices confirmed by the user:
+### Web kit
 
 ```html
 <link rel="stylesheet" href="kit.css">
 <script src="kit.js"></script>
 <script>
   GameUI.init({
-    id: "ten-game",
-    layout: "mobile",  // mobile | landscape | desktop | auto
+    id: "my-game",
+    layout: "mobile",     // mobile | landscape | desktop | auto
+    style: "ink-candy",   // see Style profiles
     sound: true,
     haptics: true,
     sky: true
@@ -146,44 +200,18 @@ After copying `assets/kit.css` and `assets/kit.js`, initialize the kit with the 
 </script>
 ```
 
-`layout` mapping: use `mobile` for portrait mobile, `landscape` for landscape mobile, `desktop` for desktop, and `auto` for both mobile and desktop.
-
-## Package structure
-
-| Path | Purpose |
+| `layout` | Use for |
 | --- | --- |
-| `SKILL.md` | Core rules, workflow, and standards |
-| `assets/kit.css` | Tokens, components, stage, layout, and web UI states |
-| `assets/kit.js` | `GameUI`: settings, toasts, modals, sound, storage, reveal, and DOM utilities |
-| `assets/template.html` | Example combining the kit into a complete game flow |
-| `references/tokens.json` | Platform-neutral token source for native platforms |
-| `references/platforms.md` | Formulas for mobile, desktop, and engines |
-| `references/frameworks.md` | Integration with frameworks, SSR, and canvas/WebGL |
-| `references/palettes.md` | Available palettes and color rules |
-| `references/code-standards.md` | Code organization and writing standards |
-| `references/assets-quality.md` | Visual asset creation, rendering, and review standards |
-| `references/styles.md` | Selectable visual style profiles and their constraints |
-| `scripts/palette.py` | Generate color variants and check contrast |
-| `scripts/preview_palettes.py` | Create palette previews |
-| `scripts/render_check.py` | Render SVG for visual checks |
-| `scripts/find_existing.py` | Find existing components or functions in the project |
+| `mobile` | Portrait mobile |
+| `landscape` | Landscape mobile |
+| `desktop` | Desktop |
+| `auto` | Both mobile and desktop |
 
-## Repository layout
+`GameUI` also exposes `toast`, `sheet`, `confirm`, `show`, `reveal`, `confetti`, `celebrate`, `burst`, `avatar`, `meter`, `icon`, `store`, `sfx`, `buzz`, `settings`, `theme`, and DOM helpers (`$`, `$$`, `setText`, `setAttr`, `setPressed`). See [`assets/kit.js`](skills/game-ui/assets/kit.js) and the live [`demo/`](demo/index.html).
 
-| Path | Purpose |
-| --- | --- |
-| `skills/game-ui/` | Marketplace skill source (`SKILL.md`) |
-| `demo/` | Landing page and browser demo for the kit |
-| `releases/game-ui.skill` | Installable ZIP package |
-| `README.md` | English and Vietnamese documentation |
-| `CHANGELOG.md` | Versioned release notes |
-| `install.sh` | One-command installer for the latest release |
-| `AGENTS.md` | Project-level agent instructions |
-| `LICENSE` | Repository license |
+### Validation tools
 
-## Validation tools
-
-The scripts require Python 3 and run from the extracted package directory:
+Python 3, run from the skill directory:
 
 ```bash
 python3 scripts/palette.py check path/to/file.css
@@ -193,124 +221,140 @@ python3 scripts/render_check.py path/to/image.svg --out check.png
 python3 scripts/find_existing.py button --project .
 ```
 
-After rendering an SVG, open the image and inspect it visually. A successful script run alone is not enough to conclude that an image is finished.
+> A successful script run is not enough. Open rendered images and inspect them visually.
 
-## Core design principles
+### Design principles
 
-- Every object has an ink outline; primary depth comes from thick lips and hard shadows.
-- Each screen has one primary CTA and one clear task.
-- Button colors retain their meaning: green for moving forward, yellow for secondary actions, red for destructive actions, and blue for safe choices.
-- Do not use template-style purple gradients, glassmorphism, soft shadows as the primary depth, or full-screen dark backgrounds.
-- Do not use emoji as system icons.
-- Do not communicate state through color alone; always include text, an icon, or a check mark.
-- Prefer local updates, a single source of truth for state, and reuse of existing components.
+- Every object has an ink outline; depth comes from thick lips and hard shadows.
+- One primary CTA and one clear task per screen.
+- Keep action colors meaningful: green forward, yellow secondary, red destructive, blue safe.
+- Avoid template purple gradients, glassmorphism, soft shadows as the main depth, and full-screen dark backgrounds.
+- No emoji as system icons.
+- Never communicate state by color alone; add text, an icon, or a check mark.
+- Update locally, keep one source of truth for state, and reuse existing components.
 
-## Contributing
+### Repository layout
 
-1. Keep changes focused on the relevant documentation, tokens, kit, or scripts.
-2. Do not modify an existing component just to create a similar copy.
-3. Run the palette, rendering, and accessibility checks appropriate to the change.
-4. Update reference documentation when behavior or an API changes.
+```text
+.
+├── skills/game-ui/          # marketplace skill source
+│   ├── SKILL.md             # core rules, workflow, standards
+│   ├── assets/              # kit.css, kit.js, template.html
+│   ├── references/          # tokens.json, platforms, frameworks, palettes,
+│   │                        # styles, code-standards, assets-quality
+│   └── scripts/             # palette, preview, render, find_existing
+├── demo/                    # landing page and browser demo
+├── releases/                # installable .skill archives
+├── .github/workflows/       # ci.yml, release.yml
+├── install.sh               # one-command installer
+├── AGENTS.md                # project-level agent instructions
+├── CHANGELOG.md             # release notes
+├── Makefile                 # build, validate, install
+├── VERSION
+└── LICENSE
+```
 
-## License
+### Releasing
 
-This package is distributed under the MIT License. See the `LICENSE` file for the complete terms. Before distributing a modified copy publicly, keep the license notice and include the same MIT License terms.
+GitHub Actions validates every PR and push to `main`, and publishes a GitHub Release when a version tag is pushed. Replace `X.Y.Z` with the new version.
 
-## Hướng dẫn tiếng Việt
+```bash
+printf 'X.Y.Z\n' > VERSION
+# add a "## [X.Y.Z]" section to CHANGELOG.md
+make release
+git add VERSION CHANGELOG.md releases
+git commit -m "chore: release vX.Y.Z"
+git tag vX.Y.Z
+git push origin main vX.Y.Z
+```
+
+The release workflow checks that the tag matches `VERSION`, builds the package, and uploads `game-ui-vX.Y.Z.skill`.
+
+### Contributing
+
+1. Keep changes focused on the relevant docs, tokens, kit, or scripts.
+2. Don't copy an existing component just to make a similar one; extend it.
+3. Run the palette, render, and accessibility checks that fit your change.
+4. Update the reference docs and `CHANGELOG.md` when behavior or an API changes.
+
+### License
+
+[MIT](LICENSE). Keep the license notice when redistributing modified copies. Grandstander and Baloo 2 fonts are third-party assets under their own OFL licenses.
+
+---
+
+## Tiếng Việt
 
 ### Giới thiệu
 
-`game-ui` là skill giao diện game mã nguồn mở cho web, mobile, desktop và game engine. Skill cung cấp phong cách **viền mực**, **nút khối dày**, màu tươi, chuyển động có phản hồi và các tiêu chuẩn về accessibility, hiệu năng, code và hình ảnh.
+`game-ui` là skill giao diện game mã nguồn mở cho web, mobile, desktop và game engine. Skill mang lại phong cách **viền mực**, **nút khối dày**, màu tươi, chuyển động có phản hồi, cùng tiêu chuẩn về accessibility, hiệu năng, code và hình ảnh.
 
-Skill không tự quyết định game, luật chơi, công nghệ, kích thước, màu sắc hay âm thanh. Trước khi dựng UI, hãy cung cấp các lựa chọn đó để skill thích ứng đúng với project.
+Skill **không** tự quyết định game, luật chơi, công nghệ, kích thước, màu sắc hay âm thanh. Trước khi dựng UI, agent sẽ hỏi bạn các lựa chọn đó và ghi vào “Phiếu thiết kế”.
 
-### Kích hoạt skill
+### Tính năng
 
-Cài skill chỉ làm skill sẵn sàng cho agent; không bắt skill chạy trong mọi cuộc hội thoại. Agent sẽ tự nạp skill khi yêu cầu khớp với `description` trong `SKILL.md`.
-
-Có thể gọi trực tiếp bằng slash command nếu agent hỗ trợ:
-
-```text
-/game-ui
-```
-
-Hoặc ghi rõ trong yêu cầu:
-
-```text
-Hãy dùng skill game-ui để thiết kế màn hình cài đặt cho game của tôi.
-```
+- Hỗ trợ HTML/JS, PWA, Electron, Tauri, Capacitor, React, Vue, Svelte, Angular, Next/Nuxt/SvelteKit.
+- Công thức cho React Native, Flutter, SwiftUI, Compose, Unity, Godot.
+- Kit web dùng ngay: token, component, layout responsive, modal, toast, âm thanh, haptics, lưu trữ, hiệu ứng.
+- Bố cục mobile dọc, mobile ngang, desktop hoặc tự thích ứng.
+- **6 style profile**: Ink Candy, Storybook Paper, Neon Arcade, Cozy Workshop, Mystic Night, Field Manual.
+- Màu ngữ nghĩa, độ tương phản, vùng chạm, focus, giảm chuyển động.
+- Công cụ kiểm tra palette, render SVG, xem trước palette, tìm code có sẵn.
 
 ### Cài đặt nhanh
 
-Repository dùng cấu trúc marketplace `skills/game-ui/SKILL.md`. Cài bằng Skills CLI:
-
 ```bash
-npx skills add maitrithanh/game-ui-skill
+npx skills add maitrithanh/game-ui-skill          # cài vào project
+npx skills add maitrithanh/game-ui-skill -g -y    # cài global
+npx skills update                                 # cập nhật khi có bản mới
 ```
 
-Cài global cho user hiện tại:
+Sau khi cập nhật, mở session agent mới để không dùng bản skill cũ.
 
-```bash
-npx skills add maitrithanh/game-ui-skill -g -y
-```
-
-Cập nhật các skill đã cài sau khi có release mới:
-
-```bash
-npx skills update
-```
-
-Sau khi cập nhật, mở session agent mới để agent không tiếp tục dùng bản skill cũ trong context hiện tại.
-
-Cài nhanh từ thư mục gốc của project:
+Cài bằng một lệnh (vào `.github/skills/game-ui/`):
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh | sh
 ```
 
-Script sẽ tải release mới nhất và cài vào `.github/skills/game-ui/`.
+Cài cho từng agent:
 
-Cài cho agent cụ thể:
+| Agent | Lệnh |
+| --- | --- |
+| 🟣 Claude Code | `... \| sh -s -- --agent claude` |
+| 🐙 GitHub Copilot | `... \| sh -s -- --agent copilot` |
+| 🟢 OpenAI Codex | `... \| sh -s -- --agent codex` |
+| 🔵 Gemini CLI | `... \| sh -s -- --agent gemini` |
+| ⚪ Generic | `... \| sh -s -- --agent agents` |
+| 📁 Thư mục riêng | `... \| sh -s -- --dir PATH` |
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh \
-  | sh -s -- --agent copilot
-```
+(`...` = `curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh`)
 
-Hỗ trợ `copilot` (`~/.copilot/skills`), `claude` (`~/.claude/skills`), `codex` (`~/.codex/skills`), `gemini` (`~/.gemini/skills`) và `agents` (`~/.agents/skills`). Dùng `--dir PATH` nếu agent sử dụng thư mục riêng.
-
-Ví dụ:
-
-```bash
-# GitHub Copilot
-curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh | sh -s -- --agent copilot
-
-# Claude Code
-curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh | sh -s -- --agent claude
-
-# OpenAI Codex
-curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh | sh -s -- --agent codex
-
-# Gemini CLI
-curl -fsSL https://raw.githubusercontent.com/maitrithanh/game-ui-skill/main/install.sh | sh -s -- --agent gemini
-```
-
-Tải `releases/game-ui.skill` từ repository, sau đó giải nén vào `.github/skills`:
+Cài thủ công từ file `.skill`:
 
 ```bash
 mkdir -p .github/skills
 unzip -oq releases/game-ui.skill -d .github/skills
 ```
 
-Sau khi giải nén, entry point là `.github/skills/game-ui/SKILL.md`.
+Entry point sau khi giải nén: `.github/skills/game-ui/SKILL.md`.
+
+### Kích hoạt skill
+
+Cài skill chỉ làm skill *sẵn sàng*; agent tự nạp khi yêu cầu khớp `description` trong `SKILL.md`. Gọi trực tiếp bằng `/game-ui` hoặc ghi rõ:
+
+```text
+Hãy dùng skill game-ui để thiết kế màn hình cài đặt cho game của tôi.
+```
 
 ### Quy trình sử dụng
 
 1. Mô tả game, luật chơi, số người chơi và các màn hình cần có.
 2. Chọn công nghệ, nền tảng, kích thước ưu tiên, màu sắc và âm thanh.
-3. Ghi lại các lựa chọn thành “Phiếu thiết kế” trước khi viết UI.
-4. Dùng kit hoặc công thức đúng với công nghệ đã chọn.
-5. Kiểm tra palette, accessibility, responsive layout, hiệu năng và hình ảnh trước khi giao.
+3. Chọn style profile phù hợp.
+4. Ghi lại thành “Phiếu thiết kế” trước khi viết UI.
+5. Dùng kit hoặc công thức đúng với công nghệ đã chọn.
+6. Kiểm tra palette, accessibility, responsive, hiệu năng và hình ảnh trước khi giao.
 
 ### Ví dụ khởi tạo web
 
@@ -320,7 +364,8 @@ Sau khi giải nén, entry point là `.github/skills/game-ui/SKILL.md`.
 <script>
   GameUI.init({
     id: "ten-game",
-    layout: "mobile",  // mobile | landscape | desktop | auto
+    layout: "mobile",     // mobile | landscape | desktop | auto
+    style: "ink-candy",
     sound: true,
     haptics: true,
     sky: true
@@ -328,70 +373,31 @@ Sau khi giải nén, entry point là `.github/skills/game-ui/SKILL.md`.
 </script>
 ```
 
-Mobile dọc dùng `mobile`, mobile ngang dùng `landscape`, desktop dùng `desktop`, còn cả mobile và desktop dùng `auto`.
-
-### Cấu trúc chính
-
-- `SKILL.md`: quy tắc và workflow chính.
-- `assets/kit.css`: token, component, sân khấu và layout web.
-- `assets/kit.js`: cài đặt, toast, modal, âm thanh, lưu trữ và tiện ích DOM.
-- `references/`: token, palette, framework, platform, code standard và tiêu chuẩn hình ảnh.
-- `references/styles.md`: các style profile và rule chi tiết để chọn đúng phong cách game.
-- `scripts/`: công cụ kiểm tra palette, render SVG và tìm code có sẵn.
+Mobile dọc dùng `mobile`, mobile ngang dùng `landscape`, desktop dùng `desktop`, cả hai dùng `auto`.
 
 ### Cấu trúc repository
 
-- `skills/game-ui/`: source marketplace có thể chỉnh sửa của skill.
-- `demo/`: landing page và browser demo.
-- `releases/game-ui.skill`: package để cài đặt.
+- `skills/game-ui/`: source skill (`SKILL.md`, `assets/`, `references/`, `scripts/`).
+- `demo/`: landing page và demo trên trình duyệt.
+- `releases/`: package `.skill` để cài đặt.
 - `CHANGELOG.md`: lịch sử thay đổi theo version.
-- `install.sh`: script cài đặt release mới nhất bằng một lệnh.
-- `AGENTS.md`: hướng dẫn agent cấp project, yêu cầu dùng `game-ui` cho task UI game.
-- `README.md`: tài liệu tiếng Anh và tiếng Việt.
-- `LICENSE`: giấy phép của repository.
+- `install.sh`: script cài bản mới nhất bằng một lệnh.
+- `AGENTS.md`: hướng dẫn agent cấp project.
+
+### Phát hành
+
+Cập nhật `VERSION`, thêm mục `## [X.Y.Z]` vào `CHANGELOG.md`, rồi:
+
+```bash
+make release
+git add VERSION CHANGELOG.md releases
+git commit -m "chore: release vX.Y.Z"
+git tag vX.Y.Z
+git push origin main vX.Y.Z
+```
+
+Workflow kiểm tra tag khớp `VERSION`, build và đính kèm `game-ui-vX.Y.Z.skill` vào GitHub Release.
 
 ### Giấy phép
 
-Package được phát hành theo [MIT License](LICENSE). Font Grandstander và Baloo 2 là tài sản bên thứ ba, được phân phối theo giấy phép OFL tương ứng.
-
-## CI/CD and releases
-
-GitHub Actions validates pull requests and pushes to `main`. A GitHub Release is created automatically when a semantic-version tag is pushed:
-
-```bash
-printf '1.1.0\n' > VERSION
-```
-
-Add a matching `## [1.1.0]` section to `CHANGELOG.md`, then commit and push the tag:
-
-```bash
-make release
-git add VERSION
-git add CHANGELOG.md
-git commit -m "chore: release v1.1.0"
-git tag v1.1.0
-git push origin main v1.1.0
-```
-
-The release workflow verifies that the tag matches `VERSION`, builds the package, and uploads `game-ui-v1.1.0.skill` to the GitHub Release.
-
-## CI/CD và phát hành
-
-GitHub Actions tự động kiểm tra Pull Request và các lần push vào `main`. Để phát hành bản mới, cập nhật version rồi push tag tương ứng:
-
-```bash
-printf '1.1.0\n' > VERSION
-```
-
-Thêm mục `## [1.1.0]` tương ứng vào `CHANGELOG.md`, sau đó commit và push tag:
-
-```bash
-make release
-git add VERSION
-git add CHANGELOG.md
-git commit -m "chore: release v1.1.0"
-git tag v1.1.0
-git push origin main v1.1.0
-```
-
-Workflow sẽ kiểm tra tag có khớp `VERSION`, chạy build, rồi đính kèm `game-ui-v1.1.0.skill` vào GitHub Release.
+[MIT License](LICENSE). Font Grandstander và Baloo 2 là tài sản bên thứ ba, phân phối theo giấy phép OFL tương ứng.

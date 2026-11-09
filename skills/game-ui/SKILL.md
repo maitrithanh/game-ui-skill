@@ -312,7 +312,9 @@ Classes attached to `<html>` by `init`: `.desk` (desktop or landscape), `.land` 
 
 | Function | Description |
 | --- | --- |
-| `init({id, layout, sound, haptics, sky, colors})` | Values come from the design brief. Adds “tap” sound to every button (`data-sfx="none"` disables it, `data-sfx="add"` changes it). **Safe to call again** (StrictMode, hot reload) |
+| `init({id, layout, style, sound, haptics, sky, colors})` | Values come from the design brief. `style` selects a profile from `STYLE_PROFILES`. Adds “tap” sound to every button (`data-sfx="none"` disables it, `data-sfx="add"` changes it). **Safe to call again** (StrictMode, hot reload) |
+| `style(name)` | Apply a style profile at runtime: `ink-candy`, `storybook-paper`, `neon-arcade`, `cozy-workshop`, `mystic-night`, or `field-manual` |
+| `STYLE_PROFILES` | Profile token definitions used by `style(name)` |
 | `theme({ yellow: "#mã", … })` | Set `--x`, `--x-d`, `--x-l` at runtime from a color code (same algorithm as `palette.py`). `shades(hex)` returns `{base, dark, light}` |
 | `features` | Options passed to `init` (read-only) |
 | `data-key="Enter\|Escape\|Space\|1…"` | Add to a screen button: that key activates it (when no modal is open and no input is focused). `.btn` gets `<kbd>` hints automatically; for dynamic labels, wrap them in `<span>` and call `setText` on the span |

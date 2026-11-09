@@ -25,7 +25,7 @@
     },
   };
 
-  const features = { sound: true, haptics: true, layout: "auto" };
+  const features = { sound: true, haptics: true, layout: "auto", style: "ink-candy" };
   function buzz(pattern = 20) {
     if (!features.haptics || (features.sound && !settings.sound)) return;
     try { navigator.vibrate && navigator.vibrate(pattern); } catch { /* iOS / không hỗ trợ */ }
@@ -76,6 +76,22 @@
   /* ---------- Nhân vật ---------- */
   // Thân tròn một màu · mắt to · má hồng · vệt sáng · viền mực dày.
   // Phụ kiện (HATS) = vai trò. Nét mặt (mood) = trạng thái. Game chỉ thêm HATS, không đổi dáng.
+  const STYLE_PROFILES = {
+    "ink-candy": { bg: "#e3eef5", card: "#ebf3fd", ink: "#2f3650" },
+    "storybook-paper": { bg: "#f4ead8", card: "#fff8e4", ink: "#493b45" },
+    "neon-arcade": { bg: "#171b35", card: "#252b4a", ink: "#11152b" },
+    "cozy-workshop": { bg: "#efe4d5", card: "#fff6e8", ink: "#4d3d37" },
+    "mystic-night": { bg: "#18213b", card: "#27304f", ink: "#11182f" },
+    "field-manual": { bg: "#e7e8e2", card: "#f8f8f1", ink: "#303735" },
+  };
+  const AVATAR_SHAPES = {
+    "ink-candy": `<circle cx="40" cy="58" r="29" fill="var(--avatar-color)" stroke="var(--ink)" stroke-width="3.2"/>`,
+    "storybook-paper": `<path d="M17 43Q19 27 40 27t23 16v28q-8 15-23 15T17 71Z" fill="var(--avatar-color)" stroke="var(--ink)" stroke-width="3.2"/>`,
+    "neon-arcade": `<path d="M24 28h32l14 30-14 30H24L10 58Z" fill="var(--avatar-color)" stroke="var(--ink)" stroke-width="3.2" stroke-linejoin="round"/>`,
+    "cozy-workshop": `<path d="M18 43Q18 28 31 25h18q13 3 13 18v27q-4 14-22 14T18 70Z" fill="var(--avatar-color)" stroke="var(--ink)" stroke-width="3.2"/>`,
+    "mystic-night": `<path d="m40 23 25 16v31L40 87 15 70V39Z" fill="var(--avatar-color)" stroke="var(--ink)" stroke-width="3.2" stroke-linejoin="round"/>`,
+    "field-manual": `<rect x="14" y="29" width="52" height="58" rx="9" fill="var(--avatar-color)" stroke="var(--ink)" stroke-width="3.2"/>`,
+  };
   const HATS = {
     none: "",
     crown: `<path d="M24 26l4-14 7 9 5-12 5 12 7-9 4 14Z" fill="var(--yellow)" stroke="var(--ink)" stroke-width="2.5" stroke-linejoin="round"/><circle cx="40" cy="20" r="2.4" fill="var(--red)" stroke="var(--ink)" stroke-width="1.5"/>`,
@@ -100,6 +116,8 @@
   function avatar({ color = "var(--yellow)", hat = "none", mood = "happy", name = "", size = 64, cls = "", style = "", label } = {}) {
     const m = MOODS[mood] || MOODS.happy;
     const ry = m.big ? 6.4 : 5.6, rx = m.big ? 5.4 : 4.8, dx = m.look || 0.6;
+    const profile = document.documentElement.dataset.style || features.style;
+    const body = (AVATAR_SHAPES[profile] || AVATAR_SHAPES["ink-candy"]).replace("var(--avatar-color)", esc(color));
     const eye = (x) => m.closed
       ? `<path d="M${x - 4} 53q4 3 8 0" fill="none" stroke="var(--ink)" stroke-width="2.6" stroke-linecap="round"/>`
       : `<ellipse cx="${x}" cy="52" rx="${rx}" ry="${ry}" fill="#fff" stroke="var(--ink)" stroke-width="2.2"/><circle cx="${x + dx}" cy="53.4" r="2.6" fill="var(--ink)"/><circle cx="${x + dx - 1}" cy="52.2" r=".9" fill="#fff"/>`;
@@ -107,10 +125,10 @@
       ? `<path d="M26 42l8 4M54 42l-8 4" stroke="var(--ink)" stroke-width="2.8" stroke-linecap="round"/>`
       : m.brow === "sad" ? `<path d="M26 45l8-3M54 45l-8-3" stroke="var(--ink)" stroke-width="2.8" stroke-linecap="round"/>` : "";
     const a11y = label ?? name;
-    return resolveVars(`<span class="avatar ${esc(cls)}" style="--s:${+size}px;${esc(style)}">`
+    return resolveVars(`<span class="avatar avatar-${esc(profile)} ${esc(cls)}" style="--s:${+size}px;${esc(style)}">`
       + `<svg viewBox="0 -6 80 104" ${a11y ? `role="img" aria-label="${esc(a11y)}"` : 'aria-hidden="true"'}>`
       + `<ellipse cx="40" cy="90" rx="22" ry="4.5" fill="rgba(31,39,64,.22)"/>`
-      + `<circle cx="40" cy="58" r="29" fill="${esc(color)}" stroke="var(--ink)" stroke-width="3.2"/>`
+      + body
       + `<circle cx="40" cy="58" r="29" fill="none" stroke="rgba(0,0,0,.10)" stroke-width="6" stroke-dasharray="0 52 60 200" transform="rotate(10 40 58)"/>`
       + `<path d="M24 40q9-10 22-8" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="4.5" stroke-linecap="round"/>`
       + `<ellipse cx="26" cy="63" rx="5" ry="3.2" fill="#ff8f9c" opacity=".7"/><ellipse cx="54" cy="63" rx="5" ry="3.2" fill="#ff8f9c" opacity=".7"/>`
@@ -356,6 +374,15 @@
     cssCache = null;
   }
 
+  function style(name = "ink-candy") {
+    const profile = String(name).toLowerCase().replace(/\s+/g, "-");
+    const selected = STYLE_PROFILES[profile] ? profile : "ink-candy";
+    features.style = selected;
+    document.documentElement.dataset.style = selected;
+    cssCache = null;
+    return selected;
+  }
+
   /* ---------- Bố cục: mobile | landscape | desktop | auto ---------- */
   // Thêm class lên <html>: .desk (màn rộng: desktop hoặc ngang), .land (ngang, thấp)
   let mqDesk, mqLand;
@@ -370,9 +397,10 @@
   /* ---------- Khởi tạo ---------- */
   // Mọi tuỳ chọn ở đây lấy từ CÂU TRẢ LỜI của người dùng (xem SKILL.md Bước 0), không tự đoán.
   let started = false;
-  function init({ id = "game", clouds = 4, sound = true, haptics = sound, layout = "auto", sky: useSky = true, colors } = {}) {
+  function init({ id = "game", clouds = 4, sound = true, haptics = sound, layout = "auto", style: visualStyle = "ink-candy", sky: useSky = true, colors } = {}) {
     NS = id;
     Object.assign(features, { sound: !!sound, haptics: !!haptics, layout });
+    style(visualStyle);
     colors && theme(colors);
     // Gọi lại an toàn (React StrictMode, hot reload): chỉ cập nhật tuỳ chọn, không gắn trùng listener.
     if (started) { applyLayout(); Object.assign(settings, store.get("settings", {})); if (!features.sound) settings.sound = false; applySettings(); return; }
@@ -408,7 +436,7 @@
   }
 
   root.GameUI = {
-    init, theme, shades, features, $, $$, wait, esc, store, buzz, sfx, SFX, tone, settings, setSetting, openSettings,
+    init, theme, style, STYLE_PROFILES, shades, features, $, $$, wait, esc, store, buzz, sfx, SFX, tone, settings, setSetting, openSettings,
     setText, setAttr, setPressed, meter, icon, ICONS: PATHS, avatar, HATS, MOODS, PALETTE,
     toast, sheet, confirm, show, peek, reveal, confetti, celebrate, burst, sky,
   };

@@ -30,6 +30,7 @@ Every profile must:
 
 - **Environment:** light sky, soft atmosphere, simple scene depth, calm background behind the play area.
 - **Surfaces:** thick tactile blocks, rounded corners, hard offset shadows, small white highlights.
+- **Outline:** solid 2px ink. This is the default border language.
 - **Palette:** bright warm accent against a cool or fresh background; use the semantic action colors from the kit.
 - **Typography:** expressive rounded display face with a highly readable rounded body face.
 - **Characters:** friendly rounded silhouettes, readable faces, role accessories, bouncy idle motion.
@@ -42,6 +43,7 @@ Every profile must:
 
 - **Environment:** paper, parchment, illustrated margin, page, map, desk, garden, or scene vignette. Use texture sparingly and never behind small text.
 - **Surfaces:** paper cards, stitched or inked borders, subtle offset layers, controlled roughness. Keep text surfaces flat enough to scan.
+- **Outline:** warm dashed outline to suggest print, stitching, or hand-inked edges without becoming noisy.
 - **Palette:** 2–3 quiet base colors plus one warm accent and semantic action colors. Avoid muddy brown monotony.
 - **Typography:** literary or hand-lettered display paired with a neutral, highly readable body face. Verify all required diacritics.
 - **Characters:** silhouette and props should communicate chapter, profession, origin, or role. Expressions are smaller and more narrative than mascot-like.
@@ -54,6 +56,7 @@ Every profile must:
 
 - **Environment:** dark or deep-toned stage with a clear playfield boundary, glow accents, grids, signals, or abstract city/tech geometry.
 - **Surfaces:** crisp panels, bright edge accents, restrained glow only where it communicates state. Use hard depth for controls; glow is not a substitute for focus.
+- **Outline:** thin electric-cyan solid line; reserve thicker edges for the active playfield and focus state.
 - **Palette:** one dark base, one cool structural hue, one hot accent, and semantic action colors. Keep text contrast measurable; do not use neon text on neon surfaces.
 - **Typography:** compact display face for score and status, neutral body face for instructions. Numbers need tabular alignment.
 - **Characters:** strong silhouette, visor/helmet/vehicle/weapon or role prop, high-contrast value blocks, readable at 24px.
@@ -66,6 +69,7 @@ Every profile must:
 
 - **Environment:** workshop, kitchen, greenhouse, market stall, desk, shelf, or homestead. Establish a believable surface and a consistent light source.
 - **Surfaces:** wood, ceramic, fabric, cardboard, enamel, or chalkboard represented with simple tokenized layers. Keep controls visually distinct from decoration.
+- **Outline:** warm brown solid outline with tactile depth; keep it softer than Ink Candy and never use it as a texture substitute.
 - **Palette:** warm neutral base with one plant/food/material accent and cool semantic controls for contrast. Avoid turning every surface orange or brown.
 - **Typography:** friendly display face for labels paired with a calm body face; item names and quantities must scan at a glance.
 - **Characters:** tools, aprons, hats, recipes, plants, pets, or crafted props communicate roles better than recoloring bodies.
@@ -78,6 +82,7 @@ Every profile must:
 
 - **Environment:** dusk, night, cave, observatory, forest, library, dream space, or star map. Use layers and focal lighting to guide attention.
 - **Surfaces:** ink, glass-like tokens, stone, velvet, constellation panels, or softly illuminated cards. Keep the active control edge clear.
+- **Outline:** double luminous-lavender outline for important surfaces; use a single clear focus ring so controls remain legible.
 - **Palette:** deep base with 1–2 luminous accents and a controlled neutral surface. Semantic colors must remain legible and must not be swallowed by the atmosphere.
 - **Typography:** distinctive display face with readable body copy; reserve decorative lettering for titles, not instructions or controls.
 - **Characters:** silhouette, cloak, artifact, mask, familiar, constellation, or magical tool should communicate identity. Use value contrast and shape for accessibility.
@@ -90,6 +95,7 @@ Every profile must:
 
 - **Environment:** map, board, dashboard, lab, archive, control room, or neutral paper/metal surface. Background decoration must stay quiet.
 - **Surfaces:** modular panels, tabs, stamped labels, grid lines, restrained hard borders, and clear status groups. Prefer comparison and scanning over ornament.
+- **Outline:** muted dashed technical outline with compact radii; reserve solid lines for grouping and active selection.
 - **Palette:** neutral base plus 2–3 functional accents. Semantic action colors remain stable; status states also include text, icons, or symbols.
 - **Typography:** highly legible sans or humanist pairing with strong numeric alignment and explicit hierarchy.
 - **Characters:** use silhouettes, badges, equipment, role icons, or portraits only when they help identify a unit or actor. Do not add mascots to an operational screen without purpose.

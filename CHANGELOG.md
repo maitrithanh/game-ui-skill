@@ -5,6 +5,25 @@ All notable changes to this project are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and versions follow [Semantic Versioning](https://semver.org/).
 
+## [1.3.1] - 2026-11-09
+
+### Changed
+
+- Made Ink Candy the default ink-border profile while adding distinct outline styles for Storybook, Neon, Cozy, Mystic, and Field Manual profiles.
+- Applied profile outline tokens to controls, panels, forms, stages, avatar labels, meters, and the demo style picker.
+
+## [1.3.0] - 2026-11-09
+
+### Added
+
+- Runtime `GameUI.style()` and `GameUI.init({ style })` support for all six style profiles.
+- Profile-specific CSS tokens for background, surfaces, typography, radius, and scene materials.
+- Theme-specific avatar silhouettes instead of one fixed round character body.
+
+### Fixed
+
+- Responsive avatar sizing, stage wrapping, name labels, and narrow-screen spacing to reduce clipping and imbalance.
+
 ## [1.2.0] - 2026-11-09
 
 ### Added
