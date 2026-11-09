@@ -13,6 +13,7 @@ This skill defines the interface and quality workflow, but does not decide the g
 - Semantic color rules, contrast, hit areas, focus, reduced motion, and user-data protection.
 - Tools for palette checks, SVG rendering, palette previews, and finding existing project code.
 - Theme-driven art direction: the agent proposes visual directions and adapts backgrounds, palettes, materials, typography, and character silhouettes to the game.
+- Six selectable style profiles with detailed rules for casual, storybook, arcade, cozy, mystical, and tactical games.
 
 ## Installation
 
@@ -153,6 +154,7 @@ After copying `assets/kit.css` and `assets/kit.js`, initialize the kit with the 
 | `references/palettes.md` | Available palettes and color rules |
 | `references/code-standards.md` | Code organization and writing standards |
 | `references/assets-quality.md` | Visual asset creation, rendering, and review standards |
+| `references/styles.md` | Selectable visual style profiles and their constraints |
 | `scripts/palette.py` | Generate color variants and check contrast |
 | `scripts/preview_palettes.py` | Create palette previews |
 | `scripts/render_check.py` | Render SVG for visual checks |
@@ -318,6 +320,7 @@ Mobile dọc dùng `mobile`, mobile ngang dùng `landscape`, desktop dùng `desk
 - `assets/kit.css`: token, component, sân khấu và layout web.
 - `assets/kit.js`: cài đặt, toast, modal, âm thanh, lưu trữ và tiện ích DOM.
 - `references/`: token, palette, framework, platform, code standard và tiêu chuẩn hình ảnh.
+- `references/styles.md`: các style profile và rule chi tiết để chọn đúng phong cách game.
 - `scripts/`: công cụ kiểm tra palette, render SVG và tìm code có sẵn.
 
 ### Cấu trúc repository

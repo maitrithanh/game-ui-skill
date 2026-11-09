@@ -5,6 +5,14 @@ All notable changes to this project are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and versions follow [Semantic Versioning](https://semver.org/).
 
+## [1.2.0] - 2026-11-09
+
+### Added
+
+- Six selectable game UI style profiles with detailed background, material, palette, typography, character, motion, and anti-pattern rules.
+- Required style selection protocol with two-direction proposal and recommendation before applying art direction.
+- Profile-specific pre-delivery review checklist to prevent accidental default styling.
+
 ## [1.1.5] - 2026-11-09
 
 ### Changed

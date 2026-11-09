@@ -27,6 +27,8 @@ Skip anything the user has already answered clearly in their request or document
 | What should the colors be? | Choose from the available palettes (6 sets, send a preview image, see `references/palettes.md`) · Brand colors (request color codes) · Game theme (request a description, propose two directions) |
 | Will it use sound? | Sound + haptics · Sound only · Haptics only · Neither |
 
+**Style direction (required when the user has not already chosen one):** ask which visual style fits the game, or infer two suitable profiles from the brief and recommend one. Use `references/styles.md`; never silently apply the default profile to every game.
+
 **Ask more when the answers above are not enough to build:**
 
 - Is there a stage scene (sky + platform for characters)? What is the platform made of: grass, ice, sand, wood, a card table…?
@@ -94,6 +96,21 @@ Size mapping: portrait mobile → `"mobile"`, landscape mobile → `"landscape"`
 - **Typography follows the mood:** choose a readable display/body pairing that supports the selected language and platform. Grandstander/Baloo 2 are the default kit pairing, not a mandatory choice when a better licensed pairing fits the theme.
 - **Characters follow the world:** when characters exist, design their silhouette, material, face, palette, accessories, and expression from their role and setting. The default round avatar is a fallback, not a mandatory character shape.
 - **Stage follows the story:** when a stage is selected, design its environment from the theme (for example a workshop, night sky, underwater scene, library, market, or abstract board). A sky, cloud, and layered grass platform are only the default example; a screen may intentionally use `.stage.flat` or a custom scene.
+
+## 1.1 Style profiles (choose one before styling)
+
+The profile controls the expressive layer of the UI: background, material, palette, typography, character language, scene composition, and motion. It must not override the quality layer: accessibility, semantic action colors, layout contract, safe areas, input size, data safety, and performance remain mandatory.
+
+Available profiles are defined in `references/styles.md`:
+
+- **Ink Candy:** playful, bright, tactile, rounded; the default fallback for casual games.
+- **Storybook Paper:** illustrated, warm, handmade, chapter-based; for narrative, word, and family games.
+- **Neon Arcade:** high-contrast, energetic, scanline-inspired; for action, rhythm, and score-chasing games.
+- **Cozy Workshop:** tactile craft materials, warm lamps, calm motion; for building, cooking, farming, and collection games.
+- **Mystic Night:** atmospheric dark surfaces with luminous accents; for mystery, strategy, fantasy, and exploration games.
+- **Field Manual:** structured, practical, restrained; for tactics, management, puzzle, and educational games.
+
+Each profile is a direction, not a component library. Select it from the game’s audience, emotional promise, mechanics, setting, and platform. If the user delegates the choice, state the chosen profile and the reason before writing UI.
 
 ## 2. Per-game choices
 
@@ -260,6 +277,7 @@ Details: `references/assets-quality.md`. Applies to every generated visual (char
 | `references/frameworks.md` | Integrate the kit with React/Vue/Svelte/Angular, SSR, canvas, and technologies not in the table |
 | `references/code-standards.md` | Standards for clean, reusable code, layers, and technology-specific directory structure |
 | `references/palettes.md` | Color rules, 6 available palettes, and color-tool usage |
+| `references/styles.md` | Selectable style profiles, selection protocol, and profile review rules |
 | `references/assets-quality.md` | Visual quality standards, render-review-revise workflow, and export sizes |
 | `scripts/find_existing.py` | Find existing functions/classes (kit and project) before writing new ones |
 | `scripts/palette.py` | Generate `-d`/`-l` pairs and check color contrast and vividness |
@@ -320,17 +338,20 @@ Classes attached to `<html>` by `init`: `.desk` (desktop or landscape), `.land` 
 ## Pre-delivery checklist
 
 1. A design brief exists; every code choice matches it, with no guesses.
-2. Every block has a 2px ink outline; buttons have thickness, highlights, and press sinking.
-3. Every screen has a three-position topbar, exactly one primary CTA, and exactly one yellow-highlighted heading phrase.
-4. Button colors have the correct meaning; destructive actions have confirmation with a correctly named red button.
-5. Sound and haptics match the user’s choices; the Sound toggle appears only when sound is enabled.
-6. Test preferred sizes (mobile: 360px and 560px; desktop: 1280px and 960px; “both”: all), toggle High Graphics, and enable reduced motion. On desktop, complete the flow with the keyboard alone.
-7. **Layout:** the layout contract passes; there is one scroll owner, no horizontal overflow, no clipping/overlap, stable tracks, and all required viewport sizes render with real content.
-8. No colors outside tokens, no emoji as system icons, and no `alert()`.
-9. User data is escaped; secrets are removed from the screen after viewing.
-10. **Technology:** code matches the user’s selected technology, uses the right directories, and follows project lint/format rules.
-11. **No rewrites:** run `find_existing.py` for every new function; no duplicate of the kit or existing code.
-12. **Clean code:** short single-purpose functions, clear names, separated `data / game / services / ui`, no magic numbers, hard-coded colors, or dead code.
-13. **Color:** `palette.py check` has no errors; inspect the render, with vivid harmonious colors, a calm stage, and prominent objects.
-14. **Smoothness:** animations use only `transform`/`opacity`, loading does not shift layout, no double taps, and low-end testing is complete.
-15. **Visuals:** `render_check.py` ran without errors **and the image was opened and inspected visually**; visuals fit the frame, include all variants, and share one line family.
+2. A style profile is selected in the Design brief; if the user delegated it, the recommendation and rationale are recorded.
+3. Background, surfaces, typography, characters, and motion visibly follow the selected profile rather than a recolored default.
+4. Every block has the profile’s intended outline/material treatment; buttons have a clear focus, press state, and depth cue.
+5. Every screen has a three-position topbar, exactly one primary CTA, and a heading treatment that belongs to the selected profile.
+6. Button colors have the correct meaning; destructive actions have confirmation with a correctly named red button.
+7. Sound and haptics match the user’s choices; the Sound toggle appears only when sound is enabled.
+8. Test preferred sizes (mobile: 360px and 560px; desktop: 1280px and 960px; “both”: all), toggle High Graphics, and enable reduced motion. On desktop, complete the flow with the keyboard alone.
+9. **Layout:** the layout contract passes; there is one scroll owner, no horizontal overflow, no clipping/overlap, stable tracks, and all required viewport sizes render with real content.
+10. No colors outside tokens, no emoji as system icons, and no `alert()`.
+11. User data is escaped; secrets are removed from the screen after viewing.
+12. **Technology:** code matches the user’s selected technology, uses the right directories, and follows project lint/format rules.
+13. **No rewrites:** run `find_existing.py` for every new function; no duplicate of the kit or existing code.
+14. **Clean code:** short single-purpose functions, clear names, separated `data / game / services / ui`, no magic numbers, hard-coded colors, or dead code.
+15. **Color:** `palette.py check` has no errors; inspect the render, with vivid harmonious colors, a calm stage, and prominent objects.
+16. **Smoothness:** animations use only `transform`/`opacity`, loading does not shift layout, no double taps, and low-end testing is complete.
+17. **Visuals:** `render_check.py` ran without errors **and the image was opened and inspected visually**; visuals fit the frame, include all variants, and share one line family.
+18. **Profile review:** the profile checklist in `references/styles.md` passes; no accidental default background, palette, character, or typography remains.
